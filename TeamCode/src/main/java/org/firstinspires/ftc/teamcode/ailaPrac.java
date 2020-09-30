@@ -27,6 +27,7 @@ public class ailaPrac extends OpMode {
 
     @Override
     public void loop() {
-if (Math.abs)
+      if (Math.abs(gamepad1.left_stick_y) > .1) {
     }
 }
+    }
