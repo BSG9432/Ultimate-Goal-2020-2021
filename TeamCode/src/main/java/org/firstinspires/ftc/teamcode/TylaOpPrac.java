@@ -37,21 +37,37 @@ public class TylaOpPrac extends OpMode {
             frontLeft.setPower(-gamepad1.left_stick_y);
 
 
-        }
-        else {
+        } else {
 
             backLeft.setPower(0);
             frontLeft.setPower(0);
-    }
+        }
         if (Math.abs(gamepad1.right_stick_y) > .1) {
             backRight.setPower(-gamepad1.right_stick_y);
             frontRight.setPower(-gamepad1.right_stick_y);
 
-        }
-        else {
+        } else {
             backRight.setPower(0);
             frontRight.setPower(0);
         }
+        if (gamepad1.left_trigger > .1) {
+            diagonalLeft(gamepad1.left_trigger);
+        }
+        if (gamepad1.right_trigger > .1) {
+            diagonalRight(gamepad1.right_trigger);
+        }
 
-              {
-        }} }
+    }
+
+
+    public void diagonalLeft (double power) {
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+}
+    public void diagonalRight (double power) {
+        frontLeft.setPower(-power);
+        backRight.setPower(power);
+    }
+
+
+}
