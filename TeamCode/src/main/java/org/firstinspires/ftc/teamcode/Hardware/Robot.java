@@ -11,6 +11,11 @@ public class Robot {
     public DcMotor backLeft;
     public DcMotor backRight;
 
+    //Constructor
+    public Robot () {
+
+    }
+
     public void initDriveTrain(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
