@@ -13,6 +13,7 @@ public class RobotTeleOpExample extends OpMode {
 
     @Override
     public void loop() {
+      bsgbot.frontLeft.setPower(.25);
 
     }
 }

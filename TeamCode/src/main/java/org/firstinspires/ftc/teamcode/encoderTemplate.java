@@ -61,14 +61,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
+@Disabled
 @Autonomous(name="encoderTemplate")
 
 public class encoderTemplate extends LinearOpMode {
-    DcMotor frontLeft;
-    DcMotor frontRight;
-    DcMotor backLeft;
-    DcMotor backRight;
+    Robot bsgbot = new Robot();
 
     private ElapsedTime     runtime = new ElapsedTime();
 
@@ -88,32 +85,29 @@ public class encoderTemplate extends LinearOpMode {
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        frontLeft=hardwareMap.dcMotor.get("frontLeft");
-        frontRight=hardwareMap.dcMotor.get("frontRight");
-        backLeft=hardwareMap.dcMotor.get("backLeft");
-        backRight=hardwareMap.dcMotor.get("backRight");
+      bsgbot.initRobot(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         //
         telemetry.addData("Path0",  "Starting at %7d :%7d",
-                frontLeft.getCurrentPosition(),
-                frontRight.getCurrentPosition(),
-                backLeft.getCurrentPosition(),
-                backRight.getCurrentPosition());
+                bsgbot.frontLeft.getCurrentPosition(),
+                bsgbot.frontRight.getCurrentPosition(),
+                bsgbot.backLeft.getCurrentPosition(),
+                bsgbot.backRight.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -154,23 +148,25 @@ public class encoderTemplate extends LinearOpMode {
             newLeftTarget = backLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = backRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
 
-            frontLeft.setTargetPosition(newLeftTarget);
-            frontRight.setTargetPosition(newRightTarget);
-            backLeft.setTargetPosition(newLeftTarget);
-            backRight.setTargetPosition(newRightTarget);
+            bsgbot.frontLeft.setTargetPosition(newLeftTarget);
+            bsgbot.frontRight.setTargetPosition(newRightTarget);
+            bsgbot.backLeft.setTargetPosition(newLeftTarget);
+            bsgbot.backRight.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            frontLeft.setPower(Math.abs(speed));
-            frontRight.setPower(Math.abs(speed));
-            backLeft.setPower(Math.abs(speed));
-            backRight.setPower(Math.abs(speed));
+            bsgbot.frontLeft.setPower(Math.abs(speed));
+            bsgbot.frontRight.setPower(Math.abs(speed));
+            bsgbot.backLeft.setPower(Math.abs(speed));
+            bsgbot.backRight.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -180,29 +176,31 @@ public class encoderTemplate extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy())) {
+                    (bsgbot.frontLeft.isBusy() && bsgbot.frontRight.isBusy() && bsgbot.backLeft.isBusy() && bsgbot.backRight.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                        frontLeft.getCurrentPosition(),
-                        frontRight.getCurrentPosition(),
-                        backLeft.getCurrentPosition(),
-                        backRight.getCurrentPosition());
+                        bsgbot.frontLeft.getCurrentPosition(),
+                        bsgbot.frontRight.getCurrentPosition(),
+                        bsgbot.backLeft.getCurrentPosition(),
+                        bsgbot.backRight.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
+            bsgbot.frontLeft.setPower(0);
+            bsgbot.frontRight.setPower(0);
+            bsgbot.backLeft.setPower(0);
+            bsgbot.backRight.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            
+            AutoTransitioner.transitionOnStop(this, "Robot Teleop");
 
             //  sleep(250);   // optional pause after each move
         }
