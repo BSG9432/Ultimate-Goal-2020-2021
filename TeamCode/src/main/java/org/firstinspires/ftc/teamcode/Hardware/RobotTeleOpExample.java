@@ -7,7 +7,7 @@ public class RobotTeleOpExample extends OpMode {
 
     @Override
     public void init() {
-        bsgbot.initDriveTrain(hardwareMap);
+        bsgbot.initRobot(hardwareMap);
         
     }
 
