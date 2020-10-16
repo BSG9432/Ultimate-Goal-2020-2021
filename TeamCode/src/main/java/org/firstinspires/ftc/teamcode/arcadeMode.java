@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 @TeleOp (name = "arcadeMode")
 
@@ -10,7 +11,7 @@ public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
     @Override
     public void init() {
-      dragonbot.initrobot(hardwareMap);
+        dragonbot.initRobot(hardwareMap);
         dragonbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -21,10 +22,10 @@ public class arcadeMode extends OpMode {
     @Override
     public void loop() {
         //telemetry to show output values for sticks (for testing purposes)
-        dragonbot.telemetry.addData("Left Stick X", gamepad1.left_stick_x);
-        dragonbot.telemetry.addData("Right Stick X", gamepad1.right_stick_x);
-        dragonbot.telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-        dragonbot.telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
+        telemetry.addData("Left Stick X", gamepad1.left_stick_x);
+        telemetry.addData("Right Stick X", gamepad1.right_stick_x);
+        telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+        telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
 
         telemetry.update();
 

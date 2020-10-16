@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 @TeleOp
 public class ailaPrac extends OpMode {
@@ -11,7 +12,7 @@ public class ailaPrac extends OpMode {
     @Override
     public void init() {
       dragonbot.initRobot(hardwareMap);
-        dragonbot.left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        dragonbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

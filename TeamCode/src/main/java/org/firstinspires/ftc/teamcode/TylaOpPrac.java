@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.Hardware.Robot;
+
 @TeleOp (name = "TylaOpPrac")
 public class TylaOpPrac extends OpMode {
     Robot bsgbot = new Robot();
