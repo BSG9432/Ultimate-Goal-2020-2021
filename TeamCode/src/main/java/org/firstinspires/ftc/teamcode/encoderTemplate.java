@@ -73,13 +73,24 @@ public class encoderTemplate extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
     //counts per motor rev = ticks per rev
-    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // NeveRest 40
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.75;
     static final double     TURN_SPEED              = 0.5;
+
+    //For strafing with encoders
+    Integer cpr = 28; //counts per rotation
+    Integer gearratio = 40; //because NeveRest 40
+    Double diameter = 4.0;
+    Double cpi = (cpr * gearratio) / (Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
+    Double bias = 0.8;//default 0.8
+    Double meccyBias = 0.9; //change to adjust only strafing movement (was .9)
+    //
+    Double conversion = cpi * bias;
+    Boolean exit = false;
 
     @Override
     public void runOpMode() {
@@ -112,6 +123,7 @@ public class encoderTemplate extends LinearOpMode {
                 bsgbot.backLeft.getCurrentPosition(),
                 bsgbot.backRight.getCurrentPosition());
         telemetry.update();
+        AutoTransitioner.transitionOnStop(this, "Robot Teleop");
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -158,8 +170,6 @@ public class encoderTemplate extends LinearOpMode {
 
             // Turn On RUN_TO_POSITION
             bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bsgbot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -203,9 +213,48 @@ public class encoderTemplate extends LinearOpMode {
             bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             
-            AutoTransitioner.transitionOnStop(this, "Robot Teleop");
 
             //  sleep(250);   // optional pause after each move
         }
     }
+    //strafing with encoders
+    public void strafeToPosition(double inches, double speed) {
+        int move = (int) (Math.round(inches * cpi * meccyBias * 1.265));
+
+        bsgbot.backLeft.setTargetPosition(bsgbot.backLeft.getCurrentPosition() - move);
+        bsgbot.frontLeft.setTargetPosition(bsgbot.frontLeft.getCurrentPosition() + move);
+        bsgbot.backRight.setTargetPosition(bsgbot.backRight.getCurrentPosition() + move);
+        bsgbot.frontRight.setTargetPosition(bsgbot.frontRight.getCurrentPosition() - move);
+
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        bsgbot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        bsgbot.frontLeft.setPower(speed);
+        bsgbot.backLeft.setPower(speed);
+        bsgbot.frontRight.setPower(speed);
+        bsgbot.backRight.setPower(speed);
+
+        //THEORETICALLY Should display our encoder positions
+        while (bsgbot.frontLeft.isBusy() && bsgbot.frontRight.isBusy() &&
+                bsgbot.backLeft.isBusy() && bsgbot.backRight.isBusy()) {
+            telemetry.addData("Path1",  "Running to %7d :%7d",
+                    bsgbot.frontLeft.getCurrentPosition() + move,
+                    bsgbot.backLeft.getCurrentPosition() - move);
+            telemetry.addData("Path2",  "Running at %7d :%7d",
+                    bsgbot.frontLeft.getCurrentPosition(),
+                    bsgbot.backRight.getCurrentPosition(),
+                    bsgbot.frontRight.getCurrentPosition(),
+                    bsgbot.backLeft.getCurrentPosition());
+            telemetry.update();
+        }
+        bsgbot.frontRight.setPower(0);
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.backRight.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        return;
+
+    }
+
 }
