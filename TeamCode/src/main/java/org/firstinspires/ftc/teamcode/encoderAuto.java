@@ -65,9 +65,9 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Disabled
-@Autonomous(name="encoderTemplate")
+@Autonomous(name="encoderAuto")
 
-public class encoderTemplate extends LinearOpMode {
+public class encoderAuto extends LinearOpMode {
     Robot bsgbot = new Robot();
 
     private ElapsedTime     runtime = new ElapsedTime();
@@ -79,6 +79,7 @@ public class encoderTemplate extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.75;
+    static final double     STRAFE_SPEED            = 0.5;
     static final double     TURN_SPEED              = 0.5;
 
     //For strafing with encoders
@@ -131,7 +132,7 @@ public class encoderTemplate extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         
-        leftPathB();
+
 
         
         
@@ -148,79 +149,79 @@ public class encoderTemplate extends LinearOpMode {
       //Red Left Path --> A 
         encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
         encoderDrive(STRAFE_SPEED,   0.5, 36, 3.0);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED, 0.5, -24, 3.0);  // S3: Strafe left 24 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 0.5, -24, 3.0);  // S3: Strafe left 24 Inches with 3 Sec timeout
     }
      public void leftPathBR() {
       //Red Left Path--> B
         encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, 12, 3.0);  // S2: Strafe right 12 Inches with 3 Sec timeout
+        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
     }
    
     public void leftPathCR() {
       //Red Left Path --> C 
         encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, 36, 3.0);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,  0.5, -24,3.0); // S3: Strafe left 24 Inches with 3 sec timeout 
+        strafeToPosition(36, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
+        strafeToPosition(-24, STRAFE_SPEED); // S3: Strafe left 24 Inches with 3 sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -48, 3.0);  // S4: Reverse 48 Inches with 3 Sec timeout
     }
 
     public void rightPathAR () {
-      encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED, 0.5, 12, 3.0);  // S2: Turn left 12 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+        strafeToPosition(12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
     }
     public void rightPathBR() {
-       encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, -12, 3.0);  // S2: Turn left 12 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+        strafeToPosition(-12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
     }
    
     public void rightPathCR () {
         encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED, 0.5, 12, 3.0);  // S2: Turn left 12 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED, 0.5, -48, 3.0);  // S2: Turn left 12 Inches with 3 Sec timeout
+        strafeToPosition(12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
+        strafeToPosition( -48, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -48, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
     }
     
     public void leftPathAB() {
       //Blue Left Path --> A 
         encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, -12, 3.0);  // S2: Strafe left 12 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED, 0.5, 24, 3.0);  // S3: Strafe right 24 Inches with 3 Sec timeout
+        strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe left 12 Inches with 3 Sec timeout
+        strafeToPosition( 24, STRAFE_SPEED);  // S3: Strafe right 24 Inches with 3 Sec timeout
     }
      public void leftPathBB() {
       //Blue Left Path--> B
-        encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, 12, 3.0);  // S2: Strafe right 12 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+         encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+         strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
+         encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
     }
    
     public void leftPathCB() {
       //Blue Left Path --> C 
         encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, -12, 3.0);  // S2: Strafe left 12 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,  0.5, 24,3.0); // S3: Strafe right 24 Inches with 3 sec timeout 
+        strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe left 12 Inches with 3 Sec timeout
+        strafeToPosition( 24, STRAFE_SPEED); // S3: Strafe right 24 Inches with 3 sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S4: Reverse 60 Inches with 3 Sec timeout
     }
-public void rightPathAB() {
+    public void rightPathAB() {
       //Blue Left Path --> A 
         encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, -36, 3.0);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED, 0.5, 24, 3.0);  // S3: Strafe left 24 Inches with 3 Sec timeout
+        strafeToPosition(-36, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
+        strafeToPosition(24, STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
     }
      public void rightPathBB() {
       //Blue Left Path--> B
-        encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, -12, 3.0);  // S2: Strafe right 12 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+         encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+         strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
+         encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
     }
    
     public void rightPathCB() {
       //Blue Left Path --> C 
         encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, -48, 3.0);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,  0.5, 24,3.0); // S3: Strafe left 24 Inches with 3 sec timeout 
+        strafeToPosition(-48, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
+        strafeToPosition(24, STRAFE_SPEED); // S3: Strafe left 24 Inches with 3 sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -48, 3.0);  // S4: Reverse 48 Inches with 3 Sec timeout
     }
     /*
