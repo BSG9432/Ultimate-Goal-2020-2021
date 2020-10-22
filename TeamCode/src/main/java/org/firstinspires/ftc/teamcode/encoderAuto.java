@@ -78,7 +78,7 @@ public class encoderAuto extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.75;
+    static final double     DRIVE_SPEED             = 0.9;
     static final double     STRAFE_SPEED            = 0.5;
     static final double     TURN_SPEED              = 0.5;
 
@@ -88,7 +88,7 @@ public class encoderAuto extends LinearOpMode {
     Double diameter = 4.0;
     Double cpi = (cpr * gearratio) / (Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
     Double bias = 0.8;//default 0.8
-    Double meccyBias = 0.9; //change to adjust only strafing movement (was .9)
+    Double meccyBias = 1.2; //change to adjust only strafing movement (was .9)
     //
     Double conversion = cpi * bias;
     Boolean exit = false;
