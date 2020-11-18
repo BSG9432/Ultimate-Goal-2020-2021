@@ -14,11 +14,11 @@ public class Robot {
     public DcMotor backLeft;
     public DcMotor backRight;
 
-    public DcMotor lift;
+    public DcMotor lift; //Lifting the wobble goal over the perimeter
     public DcMotor intake;
     public DcMotor flywheel;
     public DcMotor conveyor;
-    public Servo claw;
+    public Servo claw; //grab the wobble goal
     public Servo tilt; //not finalized (we don't know if it'll be able to support wobble)
 
     Telemetry telemetry;

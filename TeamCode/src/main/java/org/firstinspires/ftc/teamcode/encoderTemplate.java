@@ -80,14 +80,14 @@ public class encoderTemplate extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.75;
     static final double     TURN_SPEED              = 0.5;
-
+    
     //For strafing with encoders
     Integer cpr = 28; //counts per rotation
     Integer gearratio = 40; //because NeveRest 40
     Double diameter = 4.0;
     Double cpi = (cpr * gearratio) / (Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
     Double bias = 0.8;//default 0.8
-    Double meccyBias = 0.9; //change to adjust only strafing movement (was .9)
+    Double meccyBias = 1.2; //change to adjust only strafing movement (was .9)
     //
     Double conversion = cpi * bias;
     Boolean exit = false;
