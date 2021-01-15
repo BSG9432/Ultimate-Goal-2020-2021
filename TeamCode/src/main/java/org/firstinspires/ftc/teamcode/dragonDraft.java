@@ -67,7 +67,7 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
 @Disabled
 @Autonomous(name="encoderAuto")
 
-public class encoderAuto extends LinearOpMode {
+public class dragonDraft extends LinearOpMode {
     Robot bsgbot = new Robot();
 
     private ElapsedTime     runtime = new ElapsedTime();
@@ -136,7 +136,7 @@ public class encoderAuto extends LinearOpMode {
 
         
         
-        //Left Path --> C
+        
 
 
 
@@ -148,90 +148,156 @@ public class encoderAuto extends LinearOpMode {
     public void leftPathAR() {
       //Red Left Path --> A 
         encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-        encoderDrive(STRAFE_SPEED,   0.5, 36, 3.0);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.5, -24, 3.0);  // S3: Strafe left 24 Inches with 3 Sec timeout
+        strafeToPosition(36, STRAFE_SPEED); //S2: Strafe right 36 Inches with 3 Sec timeout
+        strafeToPosition(-48,STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 0.8, -12,3.0); // S4: Reverse 12 Inches with 3 Sec timeout
+        shoot(); //S5; Fire donut to middle powershot 
+        encoderDrive(DRIVE_SPEED,0.8, 12, 3.0); // S6; Move Foward 12 Inches with 3 Sec timeout
     }
      public void leftPathBR() {
       //Red Left Path--> B
         encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
         strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+        strafeToPosition(-24,STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 0.8, -36,3.0); //S4: Reverse 36 INches with 3 Sec timeout
+        shoot(); //S5: Fire donut to middle powershot 
+        encoderDrive(DRIVE_SPEED, 0.8,12,3.0);// S6: Forward 12 Inches with 3 Sec timeout 
     }
    
     public void leftPathCR() {
       //Red Left Path --> C 
         encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
         strafeToPosition(36, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        strafeToPosition(-24, STRAFE_SPEED); // S3: Strafe left 24 Inches with 3 sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -48, 3.0);  // S4: Reverse 48 Inches with 3 Sec timeout
+        strafeToPosition(-48, STRAFE_SPEED); // S3: Strafe left 48 Inches with 3 sec timeout
+        encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S4: Reverse 60 Inches with 3 Sec timeout
+        shoot(); //S5: Fire donut to middle powershot
+        encoderDrive(DRIVE_SPEED, 0.8,12,3.0);// S6: Forward 12 Inches with 3 Sec timeout 
+
     }
 
     public void rightPathAR () {
-        encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        strafeToPosition(12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+         encoderDrive(DRIVE_SPEED, 0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
+
+        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
+
+        strafeToPosition(-48, STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED,  0.8,  -24, 3.0);
+
+        shoot();
+
+        encoderDrive(DRIVE_SPEED,  0.8,  24, 3.0);
     }
     public void rightPathBR() {
-        encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        strafeToPosition(-12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+
+         strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
+
+         encoderDrive(DRIVE_SPEED, 0.8, 0, 3.0);
+
+         strafeToPosition(-24, STRAFE_SPEED);
+
+         encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+
+         shoot();
+
+         encoderDrive(DRIVE_SPEED,  0.8,  12, 3.0);
     }
    
     public void rightPathCR () {
-        encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-        strafeToPosition(12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-        strafeToPosition( -48, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -48, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+         encoderDrive(DRIVE_SPEED, 0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
+
+        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
+
+        strafeToPosition(-36, STRAFE_SPEED); // S3: Strafe left 24 Inches with 3 sec timeout
+
+        encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S4: Reverse 48 Inches with 3 Sec timeout
+
+        shoot();
+
+        encoderDrive(DRIVE_SPEED,  0.8,  12, 3.0);
     }
     
     public void leftPathAB() {
       //Blue Left Path --> A 
         encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
         strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe left 12 Inches with 3 Sec timeout
-        strafeToPosition( 24, STRAFE_SPEED);  // S3: Strafe right 24 Inches with 3 Sec timeout
+        strafeToPosition( 48, STRAFE_SPEED);  // S3: Strafe right 24 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED,0.8,-12,3.0);//S4: Reverse 12 Inches with 3 Sec timeout 
+        shoot();//S5; Fire Donut at middle powershot 
+        encoderDrive(DRIVE_SPEED,0.8,12,3.0);//S6: Forward 12 Inches with 3 Sec timeout 
     }
      public void leftPathBB() {
       //Blue Left Path--> B
          encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
          strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
-         encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+         //A
+         strafeToPosition(24,STRAFE_SPEED);//S4: Strafe right 24 Inches with 3 Sec timeout 
+         encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 36 Inches with 3 Sec timeout
+         shoot();//S4: Fire Donut at middle powershot 
+         encoderDrive(DRIVE_SPEED,0.8,12,3.0);//S5: Forward 12 Inches with 3 Sec timeout 
     }
    
     public void leftPathCB() {
       //Blue Left Path --> C 
         encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
         strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe left 12 Inches with 3 Sec timeout
-        strafeToPosition( 24, STRAFE_SPEED); // S3: Strafe right 24 Inches with 3 sec timeout
+        strafeToPosition( 48, STRAFE_SPEED); // S3: Strafe right 24 Inches with 3 sec timeout
         encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S4: Reverse 60 Inches with 3 Sec timeout
+        shoot();//S5: Fire Donut at middle powershoot 
+        encoderDrive(DRIVE_SPEED,0.8,12,3.0);//S5: Forward 12 Inches with 3 Sec timeout  
     }
     public void rightPathAB() {
-      //Blue Left Path --> A 
-        encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-        strafeToPosition(-36, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        strafeToPosition(24, STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
+      //Blue Right Path --> A 
+        encoderDrive(DRIVE_SPEED, 0.8,  60, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+
+        strafeToPosition(-36, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
+
+        strafeToPosition(48, STRAFE_SPEED);
+
+        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+
+        shoot();
+
+        encoderDrive(DRIVE_SPEED, 0.8,24,3.0);
     }
      public void rightPathBB() {
-      //Blue Left Path--> B
-         encoderDrive(DRIVE_SPEED,  0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-         strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
-         encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+      //Blue Right Path--> B
+        encoderDrive(DRIVE_SPEED, 0.8,  84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+
+        strafeToPosition(-12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
+
+        strafeToPosition(24, STRAFE_SPEED);
+
+        encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+
+        shoot();
+
+        encoderDrive(DRIVE_SPEED, 0.8,12,3.0);
     }
    
     public void rightPathCB() {
-      //Blue Left Path --> C 
-        encoderDrive(DRIVE_SPEED,  0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
-        strafeToPosition(-48, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
-        strafeToPosition(24, STRAFE_SPEED); // S3: Strafe left 24 Inches with 3 sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -48, 3.0);  // S4: Reverse 48 Inches with 3 Sec timeout
+      //Blue Right Path --> C 
+        encoderDrive(DRIVE_SPEED, 0.8,  108, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
+
+        strafeToPosition(-36, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
+
+        strafeToPosition(48, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
+
+        shoot();
+
+        encoderDrive(DRIVE_SPEED, 0.8, 12, 3.0);
     }
-    /*
-     *  Method to perform a relative move, based on encoder counts.
-     *  Encoders are not reset as the move is based on the current position.
-     *  Move will stop if any of three conditions occur:
-     *  1) Move gets to the desired position
-     *  2) Move runs out of time
-     *  3) Driver stops the opmode running.
-     */
+
+    public void shoot(){
+      bsgbot.conveyor.setPower(.5);
+      bsgbot.flywheel.setPower(1);
+      sleep(3000);
+
+    }
+    
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
