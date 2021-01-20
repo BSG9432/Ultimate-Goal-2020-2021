@@ -18,9 +18,16 @@ public class Robot {
     public DcMotor intake;
     public DcMotor flywheel;
     public DcMotor conveyor;
+<<<<<<< Updated upstream
     public Servo claw; //grab the wobble goal
     public Servo tilt; //not finalized (we don't know if it'll be able to support wobble)
 
+=======
+    public Servo leftGrab;
+    public Servo rightGrab;
+    public Servo leftFlap; //not finalized (we don't know if it'll be able to support wobble)
+    public Servo rightFlap;
+>>>>>>> Stashed changes
     Telemetry telemetry;
 
     //Constructor
@@ -40,8 +47,10 @@ public class Robot {
         flywheel = hardwareMap.dcMotor.get("flywheel");
         conveyor = hardwareMap.dcMotor.get("conveyor");
 
-        claw = hardwareMap.servo.get("claw");
-        tilt = hardwareMap.servo.get("tilt");
+        leftGrab = hardwareMap.servo.get("leftGrab");
+        rightGrab = hardwareMap.servo.get("rightGrab");
+        leftFlap = hardwareMap.servo.get("leftFlap");
+        rightFlap = hardwareMap.servo.get("rightFlap");
 
     }
 
@@ -69,5 +78,23 @@ public class Robot {
     public void diagonalLeft (double power) {
         frontRight.setPower(power);
         backLeft.setPower(-power);
+    }
+    public void openLeftGrab (){
+        leftGrab.setPosition(0);//We can't test these values yet but this is supposed to grab
+    }
+    public void openRightGrab (){
+        rightGrab.setPosition(0);// We can't test these values yet but this is supposed to grab
+    }
+    public void closeLeftGrab () {
+        leftGrab.setPosition(1);//We can't test these values yet but this is supposed to grab
+    }
+    public void closeRightGrab () {
+        rightGrab.setPosition(1);// We can't test these values yet but this is supposed to grab
+    }
+    public void useLeftFlap (double position){
+        leftFlap.setPosition(position);
+    }
+    public void useRightFlap (double position) {
+        rightFlap.setPosition(position);
     }
 }
