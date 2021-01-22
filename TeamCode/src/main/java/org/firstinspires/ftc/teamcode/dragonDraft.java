@@ -146,15 +146,7 @@ public class dragonDraft extends LinearOpMode {
     
    
     public void leftPathAR() {
-<<<<<<< Updated upstream:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/dragonDraft.java
-      //Red Left Path --> A 
-        encoderDrive(DRIVE_SPEED,  0.8,  60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-        strafeToPosition(36, STRAFE_SPEED); //S2: Strafe right 36 Inches with 3 Sec timeout
-        strafeToPosition(-48,STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 0.8, -12,3.0); // S4: Reverse 12 Inches with 3 Sec timeout
-        shoot(); //S5; Fire donut to middle powershot 
-        encoderDrive(DRIVE_SPEED,0.8, 12, 3.0); // S6; Move Foward 12 Inches with 3 Sec timeout
-=======
+
       //Red Left Path --> A (Be on the right of the wobble)
         strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 8 Inches with 3 Sec timeout
         encoderDrive(DRIVE_SPEED,  64,  64, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
@@ -169,7 +161,6 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.openRightGrab();// drop wobble goal
         encoderDrive(DRIVE_SPEED,  12,  12, 3.0); //S2: Forward 12 Inches
         strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
->>>>>>> Stashed changes:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/encoderAuto.java
     }
      public void leftPathBR() {
       //Red Left Path--> B
