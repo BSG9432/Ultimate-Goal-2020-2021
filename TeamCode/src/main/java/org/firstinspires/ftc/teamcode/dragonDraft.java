@@ -66,7 +66,7 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  */
 @Disabled
 @Autonomous(name="encoderAuto")
-
+//Our Auto paths
 public class dragonDraft extends LinearOpMode {
     Robot bsgbot = new Robot();
 

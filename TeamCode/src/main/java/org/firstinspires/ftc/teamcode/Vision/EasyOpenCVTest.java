@@ -40,6 +40,8 @@ public class EasyOpenCVTest extends LinearOpMode {
     Robot bsgBot = new Robot();
     OpenCvCamera webcam; //named webby in config
 
+    PipelineTest pipeline;
+
     @Override
     public void runOpMode()
     {
@@ -112,6 +114,8 @@ public class EasyOpenCVTest extends LinearOpMode {
             telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
             telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
+
+            telemetry.addData("Analysis", pipeline.getLatestResults());
             telemetry.update();
 
             //The "if" statement below will stop streaming from the camera when the "A" button on gamepad 1 is pressed
