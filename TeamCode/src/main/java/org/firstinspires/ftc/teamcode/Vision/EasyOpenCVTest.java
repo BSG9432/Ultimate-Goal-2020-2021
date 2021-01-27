@@ -25,6 +25,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -35,13 +36,19 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp
-public class EasyOpenCVTest extends LinearOpMode
-{
-    OpenCvCamera webcam; //webby the camera
+public class EasyOpenCVTest extends LinearOpMode {
+    Robot bsgBot = new Robot();
+    OpenCvCamera webcam; //named webby in config
+
+    PipelineTest pipeline;
 
     @Override
     public void runOpMode()
     {
+        //initialize robot hardware
+        bsgBot.initRobot(hardwareMap);
+
+        //FOR THE WEBCAM
         /*
          * Instantiate an OpenCvCamera object for the camera we'll be using.
          * Webcam stream goes to RC phone
@@ -58,12 +65,9 @@ public class EasyOpenCVTest extends LinearOpMode
 
         /*
          * Open the connection to the camera device. New in v1.4.0 is the ability
-         * to open the camera asynchronously, and this is now the recommended way
-         * to do it. The benefits of opening async include faster init time, and
+         * to open the camera asynchronously which allows faster init time, and
          * better behavior when pressing stop during init (i.e. less of a chance
          * of tripping the stuck watchdog)
-         *
-         * If you really want to open synchronously, the old method is still available.
          */
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
@@ -86,6 +90,7 @@ public class EasyOpenCVTest extends LinearOpMode
                  * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
                  * away from the user.
                  */
+                //320px x 340px
                 webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
         });
@@ -93,11 +98,11 @@ public class EasyOpenCVTest extends LinearOpMode
         telemetry.addLine("Waiting for start");
         telemetry.update();
 
-        /*
-         * Wait for the user to press start on the Driver Station
-         */
+        //Wait for the user to press start on the Driver Station
+
         waitForStart();
 
+        //Manages Telemetry and stopping the stream
         while (opModeIsActive())
         {
             /*
@@ -109,13 +114,11 @@ public class EasyOpenCVTest extends LinearOpMode
             telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
             telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
+
+            telemetry.addData("Analysis", pipeline.getLatestResults());
             telemetry.update();
 
-            /*
-             * NOTE: stopping the stream from the camera early (before the end of the OpMode
-             * when it will be automatically stopped for you) *IS* supported. The "if" statement
-             * below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
-             */
+            //The "if" statement below will stop streaming from the camera when the "A" button on gamepad 1 is pressed
             if(gamepad1.a)
             {
                 /*
@@ -140,13 +143,6 @@ public class EasyOpenCVTest extends LinearOpMode
                 webcam.stopStreaming();
                 //webcam.closeCameraDevice();
             }
-
-            /*
-             * For the purposes of this sample, throttle ourselves to 10Hz loop to avoid burning
-             * excess CPU cycles for no reason. (By default, telemetry is only sent to the DS at 4Hz
-             * anyway). Of course in a real OpMode you will likely not want to do this.
-             */
-            sleep(100);
         }
     }
 
@@ -165,8 +161,7 @@ public class EasyOpenCVTest extends LinearOpMode
      * if you're doing something weird where you do need it synchronized with your OpMode thread,
      * then you will need to account for that accordingly.
      */
-    class SamplePipeline extends OpenCvPipeline
-    {
+    class SamplePipeline extends OpenCvPipeline {
         boolean viewportPaused;
 
         /*
@@ -181,14 +176,6 @@ public class EasyOpenCVTest extends LinearOpMode
         @Override
         public Mat processFrame(Mat input)
         {
-            /*
-             * IMPORTANT NOTE: the input Mat that is passed in as a parameter to this method
-             * will only dereference to the same image for the duration of this particular
-             * invocation of this method. That is, if for some reason you'd like to save a copy
-             * of this particular frame for later use, you will need to either clone it or copy
-             * it to another Mat.
-             */
-
             /*
              * Draw a simple box around the middle 1/2 of the entire frame
              */

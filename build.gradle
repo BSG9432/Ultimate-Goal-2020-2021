@@ -9,11 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-<<<<<<< Updated upstream
-        classpath 'com.android.tools.build:gradle:4.0.2'
-=======
-        classpath 'com.android.tools.build:gradle:4.1.1'
->>>>>>> Stashed changes
+        classpath 'com.android.tools.build:gradle:4.1.2'
     }
 }
 
