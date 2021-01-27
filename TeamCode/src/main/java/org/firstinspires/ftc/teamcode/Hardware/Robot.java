@@ -18,16 +18,11 @@ public class Robot {
     public DcMotor intake;
     public DcMotor flywheel;
     public DcMotor conveyor;
-<<<<<<< Updated upstream
-    public Servo claw; //grab the wobble goal
-    public Servo tilt; //not finalized (we don't know if it'll be able to support wobble)
 
-=======
     public Servo leftGrab;
     public Servo rightGrab;
     public Servo leftFlap; //not finalized (we don't know if it'll be able to support wobble)
     public Servo rightFlap;
->>>>>>> Stashed changes
     Telemetry telemetry;
 
     //Constructor
