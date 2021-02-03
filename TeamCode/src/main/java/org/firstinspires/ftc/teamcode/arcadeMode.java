@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
+    boolean flywheelToggle = false;
+
     @Override
     public void init() {
         dragonbot.initRobot(hardwareMap);
@@ -94,6 +96,15 @@ public class arcadeMode extends OpMode {
             dragonbot.frontRight.setPower(0);
             dragonbot.backLeft.setPower(0);
             dragonbot.backRight.setPower(0);
+        }
+        if(gamepad1.a) {
+            if(flywheelToggle == false){
+                //turn on the flywheel
+                flywheelToggle = true;
+            } else {
+                //turn off the flywheel
+                flywheelToggle = false;
+            }
         }
 
 

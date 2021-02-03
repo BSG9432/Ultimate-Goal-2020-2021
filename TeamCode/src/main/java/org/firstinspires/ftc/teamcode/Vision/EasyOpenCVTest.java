@@ -107,6 +107,7 @@ public class EasyOpenCVTest extends LinearOpMode {
 
         waitForStart();
 
+
         //Manages Telemetry and stopping the stream
         while (opModeIsActive())
         {
@@ -124,9 +125,19 @@ public class EasyOpenCVTest extends LinearOpMode {
             telemetry.update();
         }
 
-        
+        switch(pipeline.getLatestResults()) {
+            case GOAL_A:
+                break;
+            case GOAL_B:
+                break;
+            case GOAL_C:
+                break;
+        }
+
+        //reminder to use the KNO3 auto transitioner once this code is working
         webcam.stopStreaming();
         //webcam.closeCameraDevice();
-        }
     }
+
+
 }
