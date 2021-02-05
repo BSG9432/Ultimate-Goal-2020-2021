@@ -107,10 +107,7 @@ public class EasyOpenCVTest extends LinearOpMode {
 
         waitForStart();
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
         //Manages Telemetry and stopping the stream
         while (opModeIsActive())
         {
@@ -126,7 +123,7 @@ public class EasyOpenCVTest extends LinearOpMode {
 
             telemetry.addData("Analysis", pipeline.getLatestResults());
             telemetry.update();
-<<<<<<< HEAD
+
 
             //The "if" statement below will stop streaming from the camera when the "A" button on gamepad 1 is pressed
             if(gamepad1.a)
@@ -206,7 +203,7 @@ public class EasyOpenCVTest extends LinearOpMode {
              */
 
             return input;
-=======
+
         }
 
         switch(pipeline.getLatestResults()) {
@@ -216,7 +213,7 @@ public class EasyOpenCVTest extends LinearOpMode {
                 break;
             case GOAL_C:
                 break;
->>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
+
         }
 
         //reminder to use the KNO3 auto transitioner once this code is working
