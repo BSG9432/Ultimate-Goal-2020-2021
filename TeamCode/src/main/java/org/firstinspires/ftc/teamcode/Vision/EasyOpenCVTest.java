@@ -56,12 +56,7 @@ public class EasyOpenCVTest extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webby"), cameraMonitorViewId);
 
-        /*
-         * Specify the image processing pipeline we wish to invoke upon receipt
-         * of a frame from the camera. Note that switching pipelines on-the-fly
-         * (while a streaming session is in flight) *IS* supported.
-         */
-        webcam.setPipeline(new SamplePipeline());
+
 
         /*
          * Open the connection to the camera device. New in v1.4.0 is the ability
@@ -92,8 +87,18 @@ public class EasyOpenCVTest extends LinearOpMode {
                  */
                 //320px x 340px
                 webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+
+                /*
+                 * Specify the image processing pipeline we wish to invoke upon receipt
+                 * of a frame from the camera. Note that switching pipelines on-the-fly
+                 * (while a streaming session is in flight) *IS* supported.
+                 */
+
+                webcam.setPipeline(new PipelineTest());
             }
         });
+        // Tell telemetry to update faster than the default 250ms period :)
+        telemetry.setMsTransmissionInterval(20);
 
         telemetry.addLine("Waiting for start");
         telemetry.update();
@@ -102,6 +107,10 @@ public class EasyOpenCVTest extends LinearOpMode {
 
         waitForStart();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
         //Manages Telemetry and stopping the stream
         while (opModeIsActive())
         {
@@ -117,6 +126,7 @@ public class EasyOpenCVTest extends LinearOpMode {
 
             telemetry.addData("Analysis", pipeline.getLatestResults());
             telemetry.update();
+<<<<<<< HEAD
 
             //The "if" statement below will stop streaming from the camera when the "A" button on gamepad 1 is pressed
             if(gamepad1.a)
@@ -196,33 +206,23 @@ public class EasyOpenCVTest extends LinearOpMode {
              */
 
             return input;
+=======
         }
 
-        @Override
-        public void onViewportTapped()
-        {
-            /*
-             * The viewport (if one was specified in the constructor) can also be dynamically "paused"
-             * and "resumed". The primary use case of this is to reduce CPU, memory, and power load
-             * when you need your vision pipeline running, but do not require a live preview on the
-             * robot controller screen. For instance, this could be useful if you wish to see the live
-             * camera preview as you are initializing your robot, but you no longer require the live
-             * preview after you have finished your initialization process; pausing the viewport does
-             * not stop running your pipeline.
-             *
-             * Here we demonstrate dynamically pausing/resuming the viewport when the user taps it
-             */
-
-            viewportPaused = !viewportPaused;
-
-            if(viewportPaused)
-            {
-                webcam.pauseViewport();
-            }
-            else
-            {
-                webcam.resumeViewport();
-            }
+        switch(pipeline.getLatestResults()) {
+            case GOAL_A:
+                break;
+            case GOAL_B:
+                break;
+            case GOAL_C:
+                break;
+>>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
         }
+
+        //reminder to use the KNO3 auto transitioner once this code is working
+        webcam.stopStreaming();
+        //webcam.closeCameraDevice();
     }
+
+
 }

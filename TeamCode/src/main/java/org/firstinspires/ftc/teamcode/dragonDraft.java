@@ -194,7 +194,10 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.openRightGrab();// drop wobble goal
         encoderDrive(DRIVE_SPEED,  12,  12, 3.0); //S2: Forward 12 Inches
         strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
+<<<<<<< HEAD
 >>>>>>> afa1038335d1e137856efe7faaf1f3e2de6da525
+=======
+>>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
     }
      public void rightPathRB() {
       //Aila: Red Right Path--> B
