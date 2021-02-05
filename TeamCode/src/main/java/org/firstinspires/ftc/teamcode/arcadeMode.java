@@ -10,13 +10,11 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
     boolean flywheelToggle = false;
-<<<<<<< HEAD
     boolean wingRightToggle = false;
     boolean wingLeftToggle = false;
     boolean grabberLeftToggle = false;
     boolean grabberRightToggle = false;
-=======
->>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
+
 
     @Override
     public void init() {
@@ -100,23 +98,16 @@ public class arcadeMode extends OpMode {
             dragonbot.backLeft.setPower(0);
             dragonbot.backRight.setPower(0);
         }
-<<<<<<< HEAD
         //Flywheel Controls
         if (gamepad1.right_bumper) {
             if (flywheelToggle == false) {
                 //turning on the flywheel
-=======
-        if(gamepad1.a) {
-            if(flywheelToggle == false){
-                //turn on the flywheel
->>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
                 flywheelToggle = true;
             } else {
                 //turn off the flywheel
                 flywheelToggle = false;
             }
         }
-<<<<<<< HEAD
         //Conveyor Down
         if (Math.abs(gamepad1.left_trigger) > .1) {
             dragonbot.conveyor.setPower(-gamepad1.left_trigger);
@@ -164,8 +155,7 @@ public class arcadeMode extends OpMode {
                     wingLeftToggle = false;
                 }
             }
-=======
->>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
+
 
             //Aila Controls
             // Driving forwards and backwards using left_stick_y
