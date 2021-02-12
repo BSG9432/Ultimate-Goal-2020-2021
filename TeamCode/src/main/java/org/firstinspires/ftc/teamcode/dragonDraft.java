@@ -131,16 +131,20 @@ public class dragonDraft extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        
 
 
-
+        
+        
+        
 
 
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-
+    
+<<<<<<< HEAD
    // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
     public void rightPathRA() {
       //Aila: Red Right Path --> A (Be on the right of the wobble)
@@ -171,8 +175,9 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.openRightGrab();//S13: drop wobble goal
 
         strafeToPosition(12, STRAFE_SPEED);  // S14: Strafe right 12 Inches with 3 Sec timeout
-
-
+>>>>>>> Stashed changes:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/encoderAuto.java
+=======
+   
     public void leftPathAR() {
 
       //Red Left Path --> A (Be on the right of the wobble)
@@ -189,7 +194,10 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.openRightGrab();// drop wobble goal
         encoderDrive(DRIVE_SPEED,  12,  12, 3.0); //S2: Forward 12 Inches
         strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
-
+<<<<<<< HEAD
+>>>>>>> afa1038335d1e137856efe7faaf1f3e2de6da525
+=======
+>>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
     }
      public void rightPathRB() {
       //Aila: Red Right Path--> B
@@ -219,7 +227,7 @@ public class dragonDraft extends LinearOpMode {
 
          strafeToPosition(12, STRAFE_SPEED);  // S12: Strafe right 12 Inches with 3 Sec timeout
     }
-
+   
     public void rightPathRC() {
       //Aila: Red Right Path --> C
         strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
@@ -276,7 +284,7 @@ public class dragonDraft extends LinearOpMode {
 
          encoderDrive(DRIVE_SPEED,  0.8,  12, 3.0);
     }
-
+   
     public void rightPathCR () {
          encoderDrive(DRIVE_SPEED, 0.8,  108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
 
@@ -319,8 +327,8 @@ public class dragonDraft extends LinearOpMode {
 
         strafeToPosition( 12, STRAFE_SPEED);  // S11: Strafe right 12 Inches with 3 Sec timeout
 
-        shoot();//S5; Fire Donut at middle powershot
-        encoderDrive(DRIVE_SPEED,0.8,12,3.0);//S6: Forward 12 Inches with 3 Sec timeout
+        shoot();//S5; Fire Donut at middle powershot 
+        encoderDrive(DRIVE_SPEED,0.8,12,3.0);//S6: Forward 12 Inches with 3 Sec timeout 
     }
      public void rightPathBB() {
          //Aila: Blue Right Path--> B
@@ -392,7 +400,7 @@ public class dragonDraft extends LinearOpMode {
 
          }
     public void rightPathAB() {
-      //Blue Right Path --> A
+      //Blue Right Path --> A 
         encoderDrive(DRIVE_SPEED, 0.8,  60, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
 
         strafeToPosition(-36, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
@@ -419,9 +427,9 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 0.8,12,3.0);
     }
-
+   
     public void rightPathCB() {
-      //Blue Right Path --> C
+      //Blue Right Path --> C 
         encoderDrive(DRIVE_SPEED, 0.8,  108, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
 
         strafeToPosition(-36, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
@@ -441,7 +449,7 @@ public class dragonDraft extends LinearOpMode {
       sleep(3000);
 
     }
-
+    
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -506,7 +514,7 @@ public class dragonDraft extends LinearOpMode {
             bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+            
 
             //  sleep(250);   // optional pause after each move
         }
