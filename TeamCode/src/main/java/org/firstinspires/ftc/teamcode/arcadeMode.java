@@ -115,7 +115,7 @@ public class arcadeMode extends OpMode {
         //Conveyor Up
         if (Math.abs(gamepad1.right_trigger) > .1) {
             dragonbot.conveyor.setPower(gamepad1.right_trigger);
-            //Wing Right Up
+            //Wing Right Toggle
             if (gamepad1.b) {
                 if (wingRightToggle == false) {
                     //turning on the right wing toggle
@@ -125,34 +125,34 @@ public class arcadeMode extends OpMode {
                     wingRightToggle = false;
                 }
             }
-            //Wing Left Up
+            //Wing Left Toggle
             if (gamepad1.x) {
                 if (wingLeftToggle == false) {
-                    //turning on the right wing toggle
+                    //turning on the left wing toggle
                     wingLeftToggle = true;
                 } else {
-                    //turn off the right wing toggle
+                    //turn off the left wing toggle
                     wingLeftToggle = false;
                 }
             }
             //Right Grabber
             if (gamepad1.y) {
                 if (grabberRightToggle == false) {
-                    //turning on the right wing toggle
-                    wingRightToggle = true;
+                    //turning on the right grabber toggle
+                    grabberRightToggle = true;
                 } else {
-                    //turn off the right wing toggle
-                    wingRightToggle = false;
+                    //turn off the right grabber toggle
+                    grabberRightToggle = false;
                 }
             }
             //Left Grabber
             if (gamepad1.a) {
                 if (grabberLeftToggle == false) {
-                    //turning on the right wing toggle
-                    wingLeftToggle = true;
+                    //turning on the left grabber toggle
+                    grabberLeftToggle = true;
                 } else {
-                    //turn off the right wing toggle
-                    wingLeftToggle = false;
+                    //turn off the left grabber toggle
+                    grabberLeftToggle = false;
                 }
             }
 
