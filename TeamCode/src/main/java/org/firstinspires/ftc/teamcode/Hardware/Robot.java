@@ -19,14 +19,15 @@ public class Robot {
     public DcMotor flywheel;
     public DcMotor conveyor;
 
-    public Servo leftGrab;
-    public Servo rightGrab;
-    public Servo leftFlap; //not finalized (we don't know if it'll be able to support wobble)
-    public Servo rightFlap;
-<<<<<<< HEAD
+    public Servo intakeWhack;
+    public Servo leftGrabber;
+    public Servo rightGrabber;
+    public Servo leftWing; //not finalized (we don't know if it'll be able to support wobble)
+    public Servo rightWing;
+<<<<<<<HEAD
 
 =======
->>>>>>> ce03afe3c21ff46cdcc468694546043d49b1ec9c
+        >>>>>>>ce03afe3c21ff46cdcc468694546043d49b1ec9c
     Telemetry telemetry;
 
     //Constructor
@@ -46,54 +47,65 @@ public class Robot {
         flywheel = hardwareMap.dcMotor.get("flywheel");
         conveyor = hardwareMap.dcMotor.get("conveyor");
 
-        leftGrab = hardwareMap.servo.get("leftGrab");
-        rightGrab = hardwareMap.servo.get("rightGrab");
-        leftFlap = hardwareMap.servo.get("leftFlap");
-        rightFlap = hardwareMap.servo.get("rightFlap");
+        intakeWhack = hardwareMap.servo.get("intakeWhack");
+        leftGrabber = hardwareMap.servo.get("leftGrabber");
+        rightGrabber = hardwareMap.servo.get("rightGrabber");
+        leftWing = hardwareMap.servo.get("leftWing");
+        rightWing = hardwareMap.servo.get("rightWing");
 
+        releaseIntake();
     }
 
     public void encoderDrive(double speed, double leftInches,
-                             double rightInches, double timeout){
+                             double rightInches, double timeout) {
         //Stay tuned :D
     }
 
-    public void drive (double power) {
+    public void drive(double power) {
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         backLeft.setPower(-power);
         backRight.setPower(power);
     }
-    public void strafe (double power) {
+
+    public void strafe(double power) {
         frontLeft.setPower(-power);
         frontRight.setPower(-power);
         backLeft.setPower(power);
         backRight.setPower(power);
     }
-    public void diagonalRight (double power) {
+
+    public void diagonalRight(double power) {
         frontLeft.setPower(-power);
         backRight.setPower(power);
     }
-    public void diagonalLeft (double power) {
+
+    public void diagonalLeft(double power) {
         frontRight.setPower(power);
         backLeft.setPower(-power);
     }
-    public void openLeftGrab (){
-        leftGrab.setPosition(0);//We can't test these values yet but this is supposed to grab
+
+    public void openLeftGrab() {
+        leftGrabber.setPosition(0);//We can't test these values yet but this is supposed to grab
     }
-    public void openRightGrab (){
-        rightGrab.setPosition(0);// We can't test these values yet but this is supposed to grab
+
+    public void openRightGrab() {
+        rightGrabber.setPosition(0);// We can't test these values yet but this is supposed to grab
+    }
+
+    }public void releaseIntake() {
+        intakeWhack.setPosition(0.7); //We can't test these values yet but this is supposed to close the intake so it fits
     }
     public void closeLeftGrab () {
-        leftGrab.setPosition(1);//We can't test these values yet but this is supposed to grab
+        leftGrabber.setPosition(1);//We can't test these values yet but this is supposed to grab
     }
     public void closeRightGrab () {
-        rightGrab.setPosition(1);// We can't test these values yet but this is supposed to grab
+        rightGrabber.setPosition(1);// We can't test these values yet but this is supposed to grab
     }
     public void useLeftFlap (double position){
-        leftFlap.setPosition(position);
+        leftWing.setPosition(position);
     }
     public void useRightFlap (double position) {
-        rightFlap.setPosition(position);
+        rightWing.setPosition(position);
     }
 }
