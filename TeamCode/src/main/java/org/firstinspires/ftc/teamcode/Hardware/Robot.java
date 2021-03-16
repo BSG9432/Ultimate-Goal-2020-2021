@@ -24,10 +24,7 @@ public class Robot {
     public Servo rightGrabber;
     public Servo leftWing; //not finalized (we don't know if it'll be able to support wobble)
     public Servo rightWing;
-<<<<<<<HEAD
 
-=======
-        >>>>>>>ce03afe3c21ff46cdcc468694546043d49b1ec9c
     Telemetry telemetry;
 
     //Constructor

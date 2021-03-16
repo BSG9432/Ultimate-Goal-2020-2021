@@ -120,113 +120,113 @@ public class arcadeMode extends OpMode {
         if (gamepad2.right_bumper) {
             dragonbot.intake.setPower(1);
         }
-            //Wing Right Toggle
+        //Wing Right Toggle
         if (gamepad1.y) {
             if (wingRightToggle == false) {
-                    //turning on the right wing toggle
-                    wingRightToggle = true;
+                //turning on the right wing toggle
+                wingRightToggle = true;
             } else {
-                    //turn off the right wing toggle
-                    wingRightToggle = false;
+                //turn off the right wing toggle
+                wingRightToggle = false;
             }
         }
-            //Wing Left Toggle
+        //Wing Left Toggle
         if (gamepad1.x) {
             if (wingLeftToggle == false) {
-                    //turning on the left wing toggle
-                    wingLeftToggle = true;
+                //turning on the left wing toggle
+                wingLeftToggle = true;
             } else {
-                    //turn off the left wing toggle
-                    wingLeftToggle = false;
+                //turn off the left wing toggle
+                wingLeftToggle = false;
             }
         }
-            //Right Grabber
+        //Right Grabber
         if (gamepad1.b) {
             if (grabberRightToggle == false) {
-                    //turning on the right grabber toggle
-                    grabberRightToggle = true;
+                //turning on the right grabber toggle
+                grabberRightToggle = true;
             } else {
-                    //turn off the right grabber toggle
-                    grabberRightToggle = false;
+                //turn off the right grabber toggle
+                grabberRightToggle = false;
             }
         }
-            //Left Grabber
+        //Left Grabber
         if (gamepad1.a) {
             if (grabberLeftToggle == false) {
-                    //turning on the left grabber toggle
-                    grabberLeftToggle = true;
+                //turning on the left grabber toggle
+                grabberLeftToggle = true;
             } else {
-                    //turn off the left grabber toggle
-                    grabberLeftToggle = false;
+                //turn off the left grabber toggle
+                grabberLeftToggle = false;
             }
         }
 
 
-            //Aila Controls
-            // Driving forwards and backwards using left_stick_y
+        //Aila Controls
+        // Driving forwards and backwards using left_stick_y
         if (Math.abs(gamepad1.left_stick_y) > .1 && Math.abs(gamepad1.left_stick_x) < .3) {
-                dragonbot.frontLeft.setPower(gamepad2.left_stick_y);
-                dragonbot.frontRight.setPower(-gamepad2.left_stick_y);
-                dragonbot.backLeft.setPower(gamepad2.left_stick_y);
-                dragonbot.backRight.setPower(-gamepad2.left_stick_y);
+            dragonbot.frontLeft.setPower(gamepad2.left_stick_y);
+            dragonbot.frontRight.setPower(-gamepad2.left_stick_y);
+            dragonbot.backLeft.setPower(gamepad2.left_stick_y);
+            dragonbot.backRight.setPower(-gamepad2.left_stick_y);
 
         } else {
-                dragonbot.frontLeft.setPower(0);
-                dragonbot.frontRight.setPower(0);
-                dragonbot.backLeft.setPower(0);
-                dragonbot.backRight.setPower(0);
+            dragonbot.frontLeft.setPower(0);
+            dragonbot.frontRight.setPower(0);
+            dragonbot.backLeft.setPower(0);
+            dragonbot.backRight.setPower(0);
         }
-            //Left strafe when left_stick_x is negative (left)
+        //Left strafe when left_stick_x is negative (left)
         if (gamepad1.left_stick_x < -.1 && Math.abs(gamepad1.left_stick_y) < .3) {
-                dragonbot.frontLeft.setPower(-gamepad1.left_stick_x);
-                dragonbot.frontRight.setPower(gamepad1.left_stick_x);
-                dragonbot.backLeft.setPower(gamepad1.left_stick_x);
-                dragonbot.backRight.setPower(-gamepad1.left_stick_x);
+            dragonbot.frontLeft.setPower(-gamepad1.left_stick_x);
+            dragonbot.frontRight.setPower(gamepad1.left_stick_x);
+            dragonbot.backLeft.setPower(gamepad1.left_stick_x);
+            dragonbot.backRight.setPower(-gamepad1.left_stick_x);
         } else {
-                dragonbot.frontLeft.setPower(0);
-                dragonbot.frontRight.setPower(0);
-                dragonbot.backLeft.setPower(0);
-                dragonbot.backRight.setPower(0);
+            dragonbot.frontLeft.setPower(0);
+            dragonbot.frontRight.setPower(0);
+            dragonbot.backLeft.setPower(0);
+            dragonbot.backRight.setPower(0);
         }
-            //Right strafe when left_stick_x is positive (right)
+        //Right strafe when left_stick_x is positive (right)
         if (gamepad1.left_stick_x > .1 && Math.abs(gamepad1.left_stick_y) < .3) {
-                dragonbot.frontLeft.setPower(-gamepad1.left_stick_x);
-                dragonbot.frontRight.setPower(gamepad1.left_stick_x);
-                dragonbot.backLeft.setPower(gamepad1.left_stick_x);
-                dragonbot.backRight.setPower(-gamepad1.left_stick_x);
+            dragonbot.frontLeft.setPower(-gamepad1.left_stick_x);
+            dragonbot.frontRight.setPower(gamepad1.left_stick_x);
+            dragonbot.backLeft.setPower(gamepad1.left_stick_x);
+            dragonbot.backRight.setPower(-gamepad1.left_stick_x);
         } else {
-                dragonbot.frontLeft.setPower(0);
-                dragonbot.frontRight.setPower(0);
-                dragonbot.backLeft.setPower(0);
-                dragonbot.backRight.setPower(0);
+            dragonbot.frontLeft.setPower(0);
+            dragonbot.frontRight.setPower(0);
+            dragonbot.backLeft.setPower(0);
+            dragonbot.backRight.setPower(0);
         }
         //Rotate counterclockwise (pivot turn left) when right stick is pressed to the left
         if (gamepad1.right_stick_x < -.1) {
-                dragonbot.frontLeft.setPower(gamepad1.right_stick_x);
-                dragonbot.frontRight.setPower(-gamepad1.right_stick_x);
-                dragonbot.backLeft.setPower(gamepad1.right_stick_x);
-                dragonbot.backRight.setPower(-gamepad1.right_stick_x);
+            dragonbot.frontLeft.setPower(gamepad1.right_stick_x);
+            dragonbot.frontRight.setPower(-gamepad1.right_stick_x);
+            dragonbot.backLeft.setPower(gamepad1.right_stick_x);
+            dragonbot.backRight.setPower(-gamepad1.right_stick_x);
         } else {
-                dragonbot.frontLeft.setPower(0);
-                dragonbot.frontRight.setPower(0);
-                dragonbot.backLeft.setPower(0);
-                dragonbot.backRight.setPower(0);
-            }
+            dragonbot.frontLeft.setPower(0);
+            dragonbot.frontRight.setPower(0);
+            dragonbot.backLeft.setPower(0);
+            dragonbot.backRight.setPower(0);
+        }
         //Rotate clockwise (pivot turn right) when right stick is pressed to the right
         if (gamepad1.right_stick_x > .1) {
-                dragonbot.frontLeft.setPower(gamepad1.right_stick_x);
-                dragonbot.frontRight.setPower(-gamepad1.right_stick_x);
-                dragonbot.backLeft.setPower(gamepad1.right_stick_x);
-                dragonbot.backRight.setPower(-gamepad1.right_stick_x);
+            dragonbot.frontLeft.setPower(gamepad1.right_stick_x);
+            dragonbot.frontRight.setPower(-gamepad1.right_stick_x);
+            dragonbot.backLeft.setPower(gamepad1.right_stick_x);
+            dragonbot.backRight.setPower(-gamepad1.right_stick_x);
         } else {
-                dragonbot.frontLeft.setPower(0);
-                dragonbot.frontRight.setPower(0);
-                dragonbot.backLeft.setPower(0);
-                dragonbot.backRight.setPower(0);
+            dragonbot.frontLeft.setPower(0);
+            dragonbot.frontRight.setPower(0);
+            dragonbot.backLeft.setPower(0);
+            dragonbot.backRight.setPower(0);
         }
         //Intake Forward Controls
         if (gamepad2.right_bumper) {
-                dragonbot.intake.setPower(1);
+            dragonbot.intake.setPower(1);
         }
         //Intake  Backwards Controls
         if (gamepad2.left_bumper) {
@@ -234,11 +234,11 @@ public class arcadeMode extends OpMode {
         }
         //Conveyor Down
         if (Math.abs(gamepad2.left_trigger) > .1) {
-                dragonbot.conveyor.setPower(-gamepad1.left_trigger);
+            dragonbot.conveyor.setPower(-gamepad1.left_trigger);
         }
         //Conveyor Up
         if (Math.abs(gamepad2.right_trigger) > .1) {
-                dragonbot.conveyor.setPower(gamepad1.right_trigger);
+            dragonbot.conveyor.setPower(gamepad1.right_trigger);
         }
         //Wing Right Toggle
         if (gamepad1.y) {
@@ -282,5 +282,6 @@ public class arcadeMode extends OpMode {
         }
 
     }
-    }
 }
+
+
