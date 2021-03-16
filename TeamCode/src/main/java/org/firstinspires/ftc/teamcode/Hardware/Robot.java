@@ -90,7 +90,7 @@ public class Robot {
         rightGrabber.setPosition(0);// We can't test these values yet but this is supposed to grab
     }
 
-    }public void releaseIntake() {
+    public void releaseIntake() {
         intakeWhack.setPosition(0.7); //We can't test these values yet but this is supposed to close the intake so it fits
     }
     public void closeLeftGrab () {
