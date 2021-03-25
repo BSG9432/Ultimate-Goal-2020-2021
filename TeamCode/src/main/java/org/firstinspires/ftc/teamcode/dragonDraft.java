@@ -126,6 +126,8 @@ public class dragonDraft extends LinearOpMode {
         telemetry.update();
         AutoTransitioner.transitionOnStop(this, "Robot Teleop");
 
+        bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
@@ -138,315 +140,263 @@ public class dragonDraft extends LinearOpMode {
     }
 
     // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
-    public void rightPathRA() {
-        //Aila: Red Right Path --> A (Be on the right of the wobble)
-        strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
+    public void redPathA() {
+        //Aila: Red Path --> A (Be on the right of the wobble)
+        strafeToPosition(12, STRAFE_SPEED);  //Strafe Right 12 inches
 
-        encoderDrive(DRIVE_SPEED, 64, 64, 3.0);  // S2: Forward 64 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 60, 60, 3.0);  //Forward 60 inches
 
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0);
-        ; //S3: Pivot left
+        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0);//Pivot Left
 
-        bsgbot.useRightFlap(1);//S4: Puts the right arm down
+        bsgbot.useRightFlap(1);//Puts the right arm down
 
-        bsgbot.openRightGrab();//S5: drop wobble goal
+        bsgbot.openRightGrab();//drops wobble goal from right side
 
-        encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0);
-        ; //S6: Forward 33.326 Inches with 3 Sec timeout
+        bsgbot.useRightFlap(0);//Puts right arm up
 
-        strafeToPosition(-35.326, STRAFE_SPEED);  // S7: Strafe left 35.326 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0); //Forward 33.326 Inches
 
-        bsgbot.useLeftFlap(1);//S8: Puts the left arm down
+        strafeToPosition(-35.326, STRAFE_SPEED);  //Strafe left 35.326 Inches
 
-        bsgbot.closeLeftGrab();// S9:grab new wobble goal
+        bsgbot.useLeftFlap(1);//Puts the left arm down
 
-        strafeToPosition(47.326, STRAFE_SPEED);  // S10: Strafe right 47.326 Inches with 3 Sec timeout
+        bsgbot.closeLeftGrab();//grab new wobble goal with left arm
 
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0);
-        ; //S11: Pivot left
+        strafeToPosition(47.326, STRAFE_SPEED);  //Strafe right 47.326 Inches
 
-        strafeToPosition(32, STRAFE_SPEED);  // S12: Strafe right 32 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
-        bsgbot.openRightGrab();//S13: drop wobble goal
+        strafeToPosition(32, STRAFE_SPEED);  //Strafe right 32 Inches
 
-        strafeToPosition(12, STRAFE_SPEED);  // S14: Strafe right 12 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
+
+        bsgbot.openLeftGrab();//drop wobble goal from left
+
+        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
+
+        strafeToPosition(-12, STRAFE_SPEED);//Strafe left 12 inches
+
+        encoderDrive(DRIVE_SPEED,72,72,3.0);//Forward 72 Inches
+
+        bsgbot.conveyor.setPower(1);//Run conveyor
+
+        sleep(3000);//Keep running until all 3 have been shot
+
+        encoderDrive(DRIVE_SPEED, -60, -60, 3.0);//Backward 60 Inches
+    }
+    public void bluePathA() {
+        //Aila: Blue Path --> A (Be on the right of the wobble)
+        strafeToPosition(-12, STRAFE_SPEED);  //Strafe left 12 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, 60, 60, 3.0);  //Forward 60 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0);//Pivot right
+
+        bsgbot.useLeftFlap(1);//Puts the left arm down
+
+        bsgbot.openLeftGrab();//Drop wobble goal from left arm
+
+        bsgbot.useLeftFlap(0);//Puts left arm up
+
+        encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0);// Forward 33.326 Inches with 3 Sec timeout
+
+        strafeToPosition(35.326, STRAFE_SPEED);//Strafe right 35.326 Inches with 3 Sec timeout
+
+        bsgbot.useRightFlap(1);//Puts the right arm down
+
+        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
+
+        strafeToPosition(-47.326, STRAFE_SPEED);  //Strafe left 47.326 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
+
+        strafeToPosition(-32, STRAFE_SPEED);  //Strafe left 32 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
+
+        bsgbot.openRightGrab();//Drop wobble goal with right side
+
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
+
+        strafeToPosition(-12, STRAFE_SPEED);//Strafe left 12 inches
+
+        encoderDrive(DRIVE_SPEED,72,72,3.0);//Forward 72 Inches
+
+        bsgbot.conveyor.setPower(1);//Run conveyor
+
+        sleep(3000);//Keep running until all 3 have been shot
+
+        encoderDrive(DRIVE_SPEED, -60, -60, 3.0);//Backward 60 Inches
+    }
+    public void redPathB() {
+        //Aila: Red Path--> B
+        strafeToPosition(12, STRAFE_SPEED);  //Strafe right 12 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, 84, 84, 3.0);  //Forward 84 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
+
+        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forward 24 Inches
+
+        bsgbot.useRightFlap(1);//Puts the right arm down
+
+        bsgbot.openRightGrab();//Drop wobble goal right arm
+
+        bsgbot.useRightFlap(0);//Puts the right arm up
+
+        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Move forward 45.366 Inches with 3 Sec timeout
+
+        strafeToPosition(-35.326, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
+
+        bsgbot.useLeftFlap(1);//Puts left wing down
+
+        bsgbot.closeLeftGrab();//Grab new wobble goal with left arm
+
+        strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
+
+        encoderDrive(-DRIVE_SPEED,-12,-12,3.0); //Backwards 12 inches
+
+        encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
+
+        bsgbot.openLeftGrab();//Drop wobble goal with left arm
+
+        encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
+
+        encoderDrive(DRIVE_SPEED, 48, 48, 3.0); //Forwards 48 Inches
+
+        bsgbot.conveyor.setPower(1);//S: Run conveyor
+
+        sleep(3000);//Run conveyor until all 3 donuts have been shot
+
+        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
     }
 
-    public void leftPathAR() {
+    public void bluePathB() {
+        //Aila: Blue Path--> B
+        strafeToPosition(-12, STRAFE_SPEED);  //Strafe left 12 Inches with 3 Sec timeout
 
-        //Red Left Path --> A (Be on the right of the wobble)
-        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 8 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 64, 64, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //S: Pivot left
-        bsgbot.useRightFlap(1);//S: Puts the left arm down
-        bsgbot.openRightGrab();// drop wobble goal
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  // S2: Strafe right 45.366 Inches with 3 Sec timeout
-        strafeToPosition(-35.326, STRAFE_SPEED);  // S2: Strafe left 35.326 Inches with 3 Sec timeout
-        bsgbot.closeRightGrab();// grab new wobble goal
-        strafeToPosition(35.326, STRAFE_SPEED);  // S2: Strafe right 35.326 Inches with 3 Sec timeout
-        encoderDrive(DRIVE_SPEED, -40.366, -40.366, 3.0);  // S2: Backward 40.366 inches with 3 sec timeout
-        bsgbot.openRightGrab();// drop wobble goal
-        encoderDrive(DRIVE_SPEED, 12, 12, 3.0); //S2: Forward 12 Inches
-        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 84, 84, 3.0);  //Forward 84 Inches with 3 Sec timeout
 
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
+
+        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forward 24 Inches
+
+        bsgbot.useLeftFlap(1);//Puts the left arm down
+
+        bsgbot.openLeftGrab();//Drop wobble goal from left arm
+
+        bsgbot.useLeftFlap(0);//Puts the left arm up
+
+        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Move forward 45.366 Inches with 3 Sec timeout
+
+        strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
+
+        bsgbot.useRightFlap(1);//Puts right wing down
+
+        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
+
+        strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
+
+        encoderDrive(-DRIVE_SPEED,-12,-12,3.0); //Backwards 12 inches
+
+        encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
+
+        bsgbot.openLeftGrab();//Drop wobble goal with left arm
+
+        encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
+
+        encoderDrive(DRIVE_SPEED, 48, 48, 3.0); //Forwards 48 Inches
+
+        bsgbot.conveyor.setPower(1);//Run conveyor
+
+        sleep(3000);//Run conveyor until all 3 donuts have been shot
+
+        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
+    }
+    public void redPathC() {
+        //Aila: Red Path --> C
+        strafeToPosition(12, STRAFE_SPEED);  //Strafe right 12 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, 108, 108, 3.0);  ///Forward 108 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
+
+        bsgbot.useRightFlap(1);//Puts the right arm down
+
+        bsgbot.openRightGrab();//Drop wobble goal from right arm
+
+        bsgbot.useRightFlap(0);//Puts the right arm up
+
+        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Strafe right 45.366 Inches with 3 Sec timeout
+
+        strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 86.634 Inches with 3 Sec timeout
+
+        bsgbot.useLeftFlap(1); //Puts left arm down
+
+        bsgbot.closeLeftGrab();//Grab new wobble goal with left arm
+
+        strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, -36, 316, 3.0);  //Backward 40.366 inches with 3 sec timeout
+
+        encoderDrive(DRIVE_SPEED,27.548,-27.548,3.0);//Pivot Right 180 degrees
+
+        bsgbot.openLeftGrab();//Drop wobble goal from left arm
+
+        encoderDrive(DRIVE_SPEED,-13.774,13.774,3.0); //Pivot Left
+
+        strafeToPosition(-24,STRAFE_SPEED);//Strafe left 24 inches
+
+        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forwards 24 Inches
+
+        bsgbot.conveyor.setPower(1);//Run conveyor
+
+        sleep(3000);//Run conveyor until all 3 donuts have been shot
+
+        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
     }
 
-    public void rightPathRB() {
-        //Aila: Red Right Path--> B
-        strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
+    public void bluePathC() {
+        //Aila: Blue Path --> C
+        strafeToPosition(-12, STRAFE_SPEED);  //Strafe left 12 Inches with 3 Sec timeout
 
-        encoderDrive(DRIVE_SPEED, 84, 84, 3.0);  // S2: Forward 84 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 108, 108, 3.0);  ///Forward 108 Inches with 3 Sec timeout
 
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //S3: Pivot left
+        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
-        bsgbot.useRightFlap(1);//S4: Puts the left arm down
+        bsgbot.useLeftFlap(1);//Puts the left arm down
 
-        bsgbot.openRightGrab();//S5: drop wobble goal
+        bsgbot.openLeftGrab();//Drop wobble goal from left
 
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  // S6: Strafe right 45.366 Inches with 3 Sec timeout
+        bsgbot.useLeftFlap(0);//Puts the left arm up
 
-        strafeToPosition(-35.326, STRAFE_SPEED);  // S7: Strafe left 35.326 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Forwards 45.366 Inches with 3 Sec timeout
 
-        bsgbot.closeRightGrab();//S8: grab new wobble goal with right arm
+        strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 86.634 Inches with 3 Sec timeout
 
-        strafeToPosition(35.326, STRAFE_SPEED);  // S8: Strafe right 35.326 Inches with 3 Sec timeout
+        bsgbot.useRightFlap(1); //Puts right arm down
 
-        encoderDrive(DRIVE_SPEED, -40.366, -40.366, 3.0);  // S9: Backward 40.366 inches with 3 sec timeout
+        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
 
-        bsgbot.openRightGrab();//S10: drop wobble goal with right arm
+        strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
 
-        encoderDrive(DRIVE_SPEED, 12, 12, 3.0); //S11: Forward 12 Inches
+        encoderDrive(DRIVE_SPEED, -36, -36, 3.0);  //Backward 36 inches with 3 sec timeout
 
-        strafeToPosition(12, STRAFE_SPEED);  // S12: Strafe right 12 Inches with 3 Sec timeout
-    }
+        encoderDrive(DRIVE_SPEED,-27.548,27.548,3.0);//Pivot Left 180 degrees
 
-    public void rightPathRC() {
-        //Aila: Red Right Path --> C
-        strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
+        bsgbot.openRightGrab();//Drop wobble goal from right side
 
-        encoderDrive(DRIVE_SPEED, 108, 108, 3.0);  /// S2: Forward 108 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED,13.774,-13.774,3.0); //Pivot Right
 
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //S3: Pivot left
+        strafeToPosition(24,STRAFE_SPEED);//Strafe right 24 inches
 
-        bsgbot.useRightFlap(1);//S4: Puts the right arm down
+        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forwards 24 Inches
 
-        bsgbot.openRightGrab();//S5: drop wobble goal
+        bsgbot.conveyor.setPower(1);//Run conveyor
 
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  // S6: Strafe right 45.366 Inches with 3 Sec timeout
+        sleep(3000);//Run conveyor until all 3 donuts have been shot
 
-        strafeToPosition(-86.634, STRAFE_SPEED);  // S7: Strafe left 86.634 Inches with 3 Sec timeout
-
-        bsgbot.closeRightGrab();//S8: grab new wobble goal
-
-        strafeToPosition(86.634, STRAFE_SPEED);  // S9: Strafe right 35.326 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, -16, -16, 3.0);  // S10: Backward 40.366 inches with 3 sec timeout
-
-        bsgbot.openRightGrab();//S11: drop wobble goal
-
-        strafeToPosition(-32, STRAFE_SPEED);  // S12: Strafe left 32 Inches with 3 Sec timeout
-
-    }
-
-    public void rightPathAR() {
-        encoderDrive(DRIVE_SPEED, 0.8, 60, 3.0);  // S1: Forward 60 Inches with 3 Sec timeout
-
-        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
-
-        strafeToPosition(-48, STRAFE_SPEED);  // S3: Strafe left 24 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);
-
-        shoot();
-
-        encoderDrive(DRIVE_SPEED, 0.8, 24, 3.0);
-    }
-
-    public void rightPathBR() {
-        encoderDrive(DRIVE_SPEED, 0.8, 84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-
-        strafeToPosition(-12, STRAFE_SPEED);  // S2: Strafe right 12 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 0.8, 0, 3.0);
-
-        strafeToPosition(-24, STRAFE_SPEED);
-
-        encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
-
-        shoot();
-
-        encoderDrive(DRIVE_SPEED, 0.8, 12, 3.0);
-    }
-
-    public void rightPathCR() {
-        encoderDrive(DRIVE_SPEED, 0.8, 108, 3.0);  // S1: Forward 108 Inches with 3 Sec timeout
-
-        strafeToPosition(12, STRAFE_SPEED);  // S2: Strafe right 36 Inches with 3 Sec timeout
-
-        strafeToPosition(-36, STRAFE_SPEED); // S3: Strafe left 24 Inches with 3 sec timeout
-
-        encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S4: Reverse 48 Inches with 3 Sec timeout
-
-        shoot();
-
-        encoderDrive(DRIVE_SPEED, 0.8, 12, 3.0);
-    }
-
-    //all of these paths need the wobble in the left grabber
-    public void rightPathBA() {
-        //Aila: Blue Right Path --> A
-        strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 84, 84, 3.0);  // S2: Forward 84 Inches with 3 Sec timeout
-
-        strafeToPosition(-36, STRAFE_SPEED);  // S3: Strafe left 36 Inches with 3 Sec timeout
-
-        bsgbot.useLeftFlap(1);//S4: Puts the left arm down
-
-        bsgbot.openLeftGrab();//S5: drop wobble goal
-
-        encoderDrive(DRIVE_SPEED, -24, -24, 3.0);//S6: Reverse 24 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //S7: Pivot left
-
-        strafeToPosition(-14.634, STRAFE_SPEED);  // S8: Strafe left 14.634 Inches with 3 Sec timeout
-
-        bsgbot.closeLeftGrab();//S8: grab new wobble goal on left
-
-        strafeToPosition(48, STRAFE_SPEED);  // S9: Strafe right 48 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //S10: Pivot left
-
-        bsgbot.openLeftGrab();//S10: drop wobble goal
-
-        strafeToPosition(12, STRAFE_SPEED);  // S11: Strafe right 12 Inches with 3 Sec timeout
-
-        shoot();//S5; Fire Donut at middle powershot
-        encoderDrive(DRIVE_SPEED, 0.8, 12, 3.0);//S6: Forward 12 Inches with 3 Sec timeout
-    }
-
-    public void rightPathBB() {
-        //Aila: Blue Right Path--> B
-        strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 108, 108, 3.0);  // S2: Forward 108 Inches with 3 Sec timeout
-
-        strafeToPosition(-12, STRAFE_SPEED);  // S3: Strafe left 12 Inches with 3 Sec timeout
-
-        bsgbot.useLeftFlap(1);//S4: Puts the left arm down
-
-        bsgbot.openLeftGrab();//S5: drop wobble goal
-
-        encoderDrive(DRIVE_SPEED, -32, -32, 3.0);//S6: Reverse 32 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0);//S7: Pivot left
-
-        encoderDrive(DRIVE_SPEED, 33.366, 33.366, 3.0);  // S8: Forward 33.366 Inches with 3 Sec timeout
-
-        strafeToPosition(-35.326, STRAFE_SPEED);  // S9: Strafe left 35.326 Inches with 3 Sec timeout
-
-        bsgbot.closeLeftGrab();//S10: grab new wobble goal
-
-        strafeToPosition(35.366, STRAFE_SPEED);  // S11: Strafe right 35.366 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, -27.488, 27.488, 3.0); //S12: Pivot left
-
-        encoderDrive(DRIVE_SPEED, 33.366, 33.366, 3.0);  // S13: Forward 33.366 Inches with 3 Sec timeout
-
-        strafeToPosition(-12, STRAFE_SPEED);  // S14: Strafe left 12 Inches with 3 Sec timeout
-
-        bsgbot.openLeftGrab();//S15: drop wobble goal
-
-        strafeToPosition(12, STRAFE_SPEED);  // S16: Strafe right 12 Inches with 3 Sec timeout
-    }
-
-
-    public void rightPathBC() {
-        //Aila: Blue Right Path --> C
-        strafeToPosition(12, STRAFE_SPEED);  // S1: Strafe right 12 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 120, 120, 3.0);  // S2: Forward 120 Inches with 3 Sec timeout
-
-        strafeToPosition(-45.366, STRAFE_SPEED);  // S3: Strafe left 45.366 Inches with 3 Sec timeout
-
-        bsgbot.useLeftFlap(1);//S4: Puts the left arm down
-
-        bsgbot.openLeftGrab();//S5: drop wobble goal
-
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //S6: Pivot left
-
-        encoderDrive(DRIVE_SPEED, -96.326, -96.326, 3.0);//S7: Reverse 96.326 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0);
-        ; //S8: Pivot left
-
-        strafeToPosition(-14.634, STRAFE_SPEED);  // S9: Strafe left 14.634 Inches with 3 Sec timeout
-
-        bsgbot.closeLeftGrab();//S10: grab new wobble goal
-
-        encoderDrive(DRIVE_SPEED, -27.488, 27.488, 3.0);//S8: Pivot left 2x
-
-        encoderDrive(DRIVE_SPEED, -12, -12, 3.0);  // S9: Reverse 12 Inches with 3 Sec timeout
-
-        strafeToPosition(-120, STRAFE_SPEED);  // S10: Strafe left 120 Inches with 3 Sec timeout
-
-        bsgbot.openLeftGrab();//S11: drop wobble goal
-
-        strafeToPosition(36, STRAFE_SPEED);  // S12: Strafe right 36 Inches with 3 Sec timeout
-
-    }
-
-    public void rightPathAB() {
-        //Blue Right Path --> A
-        encoderDrive(DRIVE_SPEED, 0.8, 60, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-
-        strafeToPosition(-36, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-
-        strafeToPosition(48, STRAFE_SPEED);
-
-        encoderDrive(DRIVE_SPEED, 0.8, -24, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
-
-        shoot();
-
-        encoderDrive(DRIVE_SPEED, 0.8, 24, 3.0);
-    }
-
-    public void rightPathBBCHECK() {
-        //Blue Right Path--> B
-        //Test this and delete if it's repetitive
-        encoderDrive(DRIVE_SPEED, 0.8, 84, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-
-        strafeToPosition(-12, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-
-        strafeToPosition(24, STRAFE_SPEED);
-
-        encoderDrive(DRIVE_SPEED, 0.8, -36, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
-
-        shoot();
-
-        encoderDrive(DRIVE_SPEED, 0.8, 12, 3.0);
-    }
-
-    public void rightPathCB() {
-        //Blue Right Path --> C
-        encoderDrive(DRIVE_SPEED, 0.8, 108, 3.0);  // S1: Forward 84 Inches with 3 Sec timeout
-
-        strafeToPosition(-36, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-
-        strafeToPosition(48, STRAFE_SPEED);  // S2: Turn left 12 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 0.8, -60, 3.0);  // S3: Reverse 24 Inches with 3 Sec timeout
-
-        shoot();
-
-        encoderDrive(DRIVE_SPEED, 0.8, 12, 3.0);
-    }
-
-    public void shoot() {
-        bsgbot.conveyor.setPower(.5);
-        bsgbot.flywheel.setPower(1);
-        sleep(3000);
-
+        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
     }
 
     public void encoderDrive(double speed, double leftInches,
