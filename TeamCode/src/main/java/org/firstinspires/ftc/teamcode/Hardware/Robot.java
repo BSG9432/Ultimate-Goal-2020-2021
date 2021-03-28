@@ -14,12 +14,9 @@ public class Robot {
     public DcMotor backLeft;
     public DcMotor backRight;
 
-    public DcMotor lift; //Lifting the wobble goal over the perimeter
     public DcMotor intake;
-    public DcMotor flywheel;
     public DcMotor conveyor;
 
-    public Servo intakeWhack;
     public Servo leftGrabber;
     public Servo rightGrabber;
     public Servo leftWing; //not finalized (we don't know if it'll be able to support wobble)
@@ -39,18 +36,14 @@ public class Robot {
         backLeft = hardwareMap.dcMotor.get("backLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
 
-        lift = hardwareMap.dcMotor.get("lift");
         intake = hardwareMap.dcMotor.get("intake");
-        flywheel = hardwareMap.dcMotor.get("flywheel");
         conveyor = hardwareMap.dcMotor.get("conveyor");
 
-        intakeWhack = hardwareMap.servo.get("intakeWhack");
         leftGrabber = hardwareMap.servo.get("leftGrabber");
         rightGrabber = hardwareMap.servo.get("rightGrabber");
         leftWing = hardwareMap.servo.get("leftWing");
         rightWing = hardwareMap.servo.get("rightWing");
 
-        releaseIntake();
     }
 
     public void encoderDrive(double speed, double leftInches,
@@ -82,27 +75,35 @@ public class Robot {
         backLeft.setPower(-power);
     }
 
+    //open grabbers
     public void openLeftGrab() {
-        leftGrabber.setPosition(0);//We can't test these values yet but this is supposed to grab
+        leftGrabber.setPosition(.8);//We can't test these values yet but this is supposed to grab
     }
 
     public void openRightGrab() {
-        rightGrabber.setPosition(0);// We can't test these values yet but this is supposed to grab
+        rightGrabber.setPosition(.4);// We can't test these values yet but this is supposed to grab
     }
 
-    public void releaseIntake() {
-        intakeWhack.setPosition(0.7); //We can't test these values yet but this is supposed to close the intake so it fits
-    }
+    //close grabbers
     public void closeLeftGrab () {
-        leftGrabber.setPosition(1);//We can't test these values yet but this is supposed to grab
+        leftGrabber.setPosition(.4);//We can't test these values yet but this is supposed to grab
     }
     public void closeRightGrab () {
-        rightGrabber.setPosition(1);// We can't test these values yet but this is supposed to grab
+        rightGrabber.setPosition(.8);// We can't test these values yet but this is supposed to grab
     }
-    public void useLeftFlap (double position){
-        leftWing.setPosition(position);
+    //Wings Up
+    public void leftWingUp (){
+        leftWing.setPosition(.7);
     }
-    public void useRightFlap (double position) {
-        rightWing.setPosition(position);
+    public void rightWingUp () {
+        rightWing.setPosition(0);
     }
+    //Wings Down
+    public void leftWingDown (){
+        leftWing.setPosition(.2);
+    }
+    public void rightWingDown () {
+        rightWing.setPosition(.5);
+    }
+
 }
