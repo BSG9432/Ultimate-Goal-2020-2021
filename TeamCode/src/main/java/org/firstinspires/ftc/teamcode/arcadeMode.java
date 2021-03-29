@@ -13,8 +13,8 @@ public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
     int rightWingToggle = 0;
     int leftWingToggle = 0;
-    int rightGrabberToggle = 0;
-    int leftGrabberToggle = 0;
+    int rightClawToggle = 0;
+    int leftClawToggle = 0;
 
 
     @Override
@@ -32,8 +32,8 @@ public class arcadeMode extends OpMode {
 
         dragonbot.leftWingUp();
         dragonbot.rightWingUp();
-        dragonbot.openLeftGrab();
-        dragonbot.openRightGrab();
+        dragonbot.openLeftClaw();
+        dragonbot.openRightClaw();
 
     }
 
@@ -44,8 +44,8 @@ public class arcadeMode extends OpMode {
         telemetry.addData("Right Stick X", gamepad1.right_stick_x);
         telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
         telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
-        telemetry.addData("RightGrabber: ", rightGrabberToggle);
-        telemetry.addData("LeftGrabber", leftGrabberToggle);
+        telemetry.addData("RightClaw: ", rightClawToggle);
+        telemetry.addData("LeftClaw", leftClawToggle);
         telemetry.addData("RightWing: ", rightWingToggle);
         telemetry.addData("LeftWing", leftWingToggle);
 
@@ -163,30 +163,30 @@ public class arcadeMode extends OpMode {
             dragonbot.leftWingDown();
         }
 
-        //Right Grabber Toggle
+        //Right Claw Toggle
         if (gamepad1.b) {
             //add to counter every time button is pressed
-            rightGrabberToggle++;
+            rightClawToggle++;
         }
-        if (rightGrabberToggle % 2 == 0) {
+        if (rightClawToggle % 2 == 0) {
             //toggle to open
-            dragonbot.openRightGrab();
+            dragonbot.openRightClaw();
         } else {
             //turn off the right wing toggle
-            dragonbot.closeRightGrab();
+            dragonbot.closeRightClaw();
         }
 
-        //Left Grabber Toggle
+        //Left Claw Toggle
         if (gamepad1.a) {
             //add to counter every time button is pressed
-            leftGrabberToggle++;
+            leftClawToggle++;
         }
-        if (leftGrabberToggle % 2 == 0) {
+        if (leftClawToggle % 2 == 0) {
             //toggle to open
-            dragonbot.openLeftGrab();
+            dragonbot.openLeftClaw();
         } else {
             //turn off the right wing toggle
-            dragonbot.closeLeftGrab();
+            dragonbot.closeLeftClaw();
         }
 
 
