@@ -64,9 +64,9 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="dragonDraft")
+@Autonomous(name="encoderTesting")
 //Our Auto paths
-public class dragonDraft extends LinearOpMode {
+public class encoderTesting extends LinearOpMode {
     Robot bsgbot = new Robot();
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -123,7 +123,7 @@ public class dragonDraft extends LinearOpMode {
                 bsgbot.backLeft.getCurrentPosition(),
                 bsgbot.backRight.getCurrentPosition());
         telemetry.update();
-        //AutoTransitioner.transitionOnStop(this, "Robot Teleop");
+        AutoTransitioner.transitionOnStop(this, "Robot Teleop");
 
         bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -134,7 +134,7 @@ public class dragonDraft extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
 
-        redPathA();
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
