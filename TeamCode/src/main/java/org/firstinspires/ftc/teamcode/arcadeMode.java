@@ -15,7 +15,7 @@ public class arcadeMode extends OpMode {
     int leftWingToggle = 0;
     int rightGrabberToggle = 0;
     int leftGrabberToggle = 0;
-    int buttonPress = 10; //check if counter increased to signify a button press
+    int buttonPress = 20; //check if counter increased to signify a button press
     boolean rightWingToggleStatus = false;
     boolean leftWingToggleStatus = false;
     boolean rightGrabberToggleStatus = false;
@@ -29,11 +29,6 @@ public class arcadeMode extends OpMode {
         dragonbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         dragonbot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        dragonbot.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        dragonbot.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        dragonbot.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        dragonbot.backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         dragonbot.leftWingUp();
         dragonbot.rightWingUp();

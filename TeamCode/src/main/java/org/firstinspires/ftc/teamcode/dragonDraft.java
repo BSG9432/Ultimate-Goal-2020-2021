@@ -34,6 +34,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
 
@@ -100,6 +102,12 @@ public class dragonDraft extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
+        bsgbot.closeLeftGrab();
+        bsgbot.closeRightGrab();
+        bsgbot.leftWingUp();
+        bsgbot.rightWingUp();
+
+
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
