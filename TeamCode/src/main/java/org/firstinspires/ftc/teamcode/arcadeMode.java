@@ -171,7 +171,7 @@ public class arcadeMode extends OpMode {
             dragonbot.leftWingDown();
         }
 
-        //Right Grabber Toggle
+        //Right Claw Toggle
         if (gamepad1.b) {
             //add to counter every time button is pressed
             rightClawToggle++;
@@ -184,7 +184,7 @@ public class arcadeMode extends OpMode {
             dragonbot.closeRightClaw();
         }
 
-        //Left Grabber Toggle
+        //Left Claw Toggle
         if (gamepad1.a) {
             //add to counter every time button is pressed
             leftClawToggle++;
@@ -199,7 +199,7 @@ public class arcadeMode extends OpMode {
 
 
         //trying different toggle logic
-        
+
        if (gamepad2.a){
            rightClawToggle++;
            if (rightClawToggle > buttonPress){
@@ -221,5 +221,3 @@ public class arcadeMode extends OpMode {
        }
     }
 }
-
-
