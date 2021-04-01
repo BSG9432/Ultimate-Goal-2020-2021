@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -22,7 +23,7 @@ public class Robot {
     public Servo leftWing; //not finalized (we don't know if it'll be able to support wobble)
     public Servo rightWing;
 
-    Telemetry telemetry;
+    public Telemetry telemetry;
 
     //Constructor
     public Robot() {
@@ -44,6 +45,11 @@ public class Robot {
         leftWing = hardwareMap.servo.get("leftWing");
         rightWing = hardwareMap.servo.get("rightWing");
 
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
     }
 
     public void encoderDrive(double speed, double leftInches,
@@ -52,9 +58,9 @@ public class Robot {
     }
 
     public void drive(double power) {
-        frontLeft.setPower(-power);
+        frontLeft.setPower(power);
         frontRight.setPower(power);
-        backLeft.setPower(-power);
+        backLeft.setPower(power);
         backRight.setPower(power);
     }
 
@@ -93,17 +99,17 @@ public class Robot {
     }
     //Wings Up
     public void leftWingUp (){
-        leftWing.setPosition(.7);
+        leftWing.setPosition(0);
     }
     public void rightWingUp () {
-        rightWing.setPosition(0);
+        rightWing.setPosition(.7);
     }
     //Wings Down
     public void leftWingDown (){
-        leftWing.setPosition(.2);
+        leftWing.setPosition(.5);
     }
     public void rightWingDown () {
-        rightWing.setPosition(.5);
+        rightWing.setPosition(.2);
     }
 
 }

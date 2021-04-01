@@ -100,6 +100,10 @@ public class encoderTesting extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
+        bsgbot.closeLeftGrab();
+        bsgbot.closeRightGrab();
+        bsgbot.leftWingUp();
+        bsgbot.rightWingUp();
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -132,7 +136,12 @@ public class encoderTesting extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-
+        encoderDrive(DRIVE_SPEED, 0, 30, 5.0);
+        encoderDrive(DRIVE_SPEED, 30, 0, 5.0);
+        encoderDrive(DRIVE_SPEED, 0, -30, 5.0);
+        encoderDrive(DRIVE_SPEED, -30, 0, 5.0);
+        //bsgbot.drive(1);
+        //sleep(10000);
 
 
         telemetry.addData("Path", "Complete");
