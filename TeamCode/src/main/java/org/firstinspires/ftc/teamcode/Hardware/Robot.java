@@ -18,8 +18,8 @@ public class Robot {
     public DcMotor intake;
     public DcMotor conveyor;
 
-    public Servo leftGrabber;
-    public Servo rightGrabber;
+    public Servo leftClaw;
+    public Servo rightClaw;
     public Servo leftWing; //not finalized (we don't know if it'll be able to support wobble)
     public Servo rightWing;
 
@@ -29,7 +29,7 @@ public class Robot {
     public Robot() {
 
     }
-
+//Claws need to be changed to motors
     //initialize our hardware
     public void initRobot(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
@@ -40,8 +40,8 @@ public class Robot {
         intake = hardwareMap.dcMotor.get("intake");
         conveyor = hardwareMap.dcMotor.get("conveyor");
 
-        leftGrabber = hardwareMap.servo.get("leftGrabber");
-        rightGrabber = hardwareMap.servo.get("rightGrabber");
+        leftClaw = hardwareMap.servo.get("leftClaw");
+        rightClaw = hardwareMap.servo.get("rightClaw");
         leftWing = hardwareMap.servo.get("leftWing");
         rightWing = hardwareMap.servo.get("rightWing");
 
@@ -81,21 +81,20 @@ public class Robot {
         backLeft.setPower(-power);
     }
 
-    //open grabbers
-    public void openLeftGrab() {
-        leftGrabber.setPosition(.8);//We can't test these values yet but this is supposed to grab
+    //open Claws
+    public void openLeftClaw() {
+        leftClaw.setPosition(.8);//We can't test these values yet but this is supposed to grab
+    }
+    public void openRightClaw() {
+        rightClaw.setPosition(.4);// We can't test these values yet but this is supposed to grab
     }
 
-    public void openRightGrab() {
-        rightGrabber.setPosition(.4);// We can't test these values yet but this is supposed to grab
+    //close Claws
+    public void closeLeftClaw () {
+        leftClaw.setPosition(.4);//We can't test these values yet but this is supposed to grab
     }
-
-    //close grabbers
-    public void closeLeftGrab () {
-        leftGrabber.setPosition(.4);//We can't test these values yet but this is supposed to grab
-    }
-    public void closeRightGrab () {
-        rightGrabber.setPosition(.8);// We can't test these values yet but this is supposed to grab
+    public void closeRightClaw () {
+        rightClaw.setPosition(.8);// We can't test these values yet but this is supposed to grab
     }
     //Wings Up
     public void leftWingUp (){
@@ -106,10 +105,10 @@ public class Robot {
     }
     //Wings Down
     public void leftWingDown (){
-        leftWing.setPosition(.5);
+        leftWing.setPosition(.7);
     }
     public void rightWingDown () {
-        rightWing.setPosition(.2);
+        rightWing.setPosition(0);
     }
 
 }

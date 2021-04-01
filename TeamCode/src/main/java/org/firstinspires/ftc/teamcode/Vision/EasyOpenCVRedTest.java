@@ -124,10 +124,13 @@ public class EasyOpenCVRedTest extends LinearOpMode {
 
             switch (pipeline.getLatestResults()) {
                 case GOAL_A:
+                    //copy code from dragon draft red A (if it works)
                     break;
                 case GOAL_B:
+                    //copy code from dragon draft red B (if it works)
                     break;
                 case GOAL_C:
+                    //copy code from dragon draft red C (if it works)
                     break;
 
             }

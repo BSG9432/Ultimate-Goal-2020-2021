@@ -13,13 +13,13 @@ public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
     int rightWingToggle = 0;
     int leftWingToggle = 0;
-    int rightGrabberToggle = 0;
-    int leftGrabberToggle = 0;
-    int buttonPress = 20; //check if counter increased to signify a button press
+    int rightClawToggle = 0;
+    int leftClawToggle = 0;
+    int buttonPress = 15; //check if counter increased to signify a button press
     boolean rightWingToggleStatus = false;
     boolean leftWingToggleStatus = false;
-    boolean rightGrabberToggleStatus = false;
-    boolean leftGrabberToggleStatus = false;
+    boolean rightClawToggleStatus = false;
+    boolean leftClawToggleStatus = false;
 
 
     @Override
@@ -32,8 +32,16 @@ public class arcadeMode extends OpMode {
 
         dragonbot.leftWingUp();
         dragonbot.rightWingUp();
-        dragonbot.openLeftGrab();
-        dragonbot.openRightGrab();
+        dragonbot.openLeftClaw();
+        dragonbot.openRightClaw();
+        dragonbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        dragonbot.frontLeft.getMotorType().setAchieveableMaxRPMFraction(1.0);
+        dragonbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        dragonbot.frontRight.getMotorType().setAchieveableMaxRPMFraction(1.0);
+        dragonbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        dragonbot.backLeft.getMotorType().setAchieveableMaxRPMFraction(1.0);
+        dragonbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        dragonbot.backRight.getMotorType().setAchieveableMaxRPMFraction(1.0);
 
     }
 
@@ -44,8 +52,8 @@ public class arcadeMode extends OpMode {
         telemetry.addData("Right Stick X", gamepad1.right_stick_x);
         telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
         telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
-        telemetry.addData("RightGrabber: ", rightGrabberToggle);
-        telemetry.addData("LeftGrabber", leftGrabberToggle);
+        telemetry.addData("RightClaw: ", rightClawToggle);
+        telemetry.addData("LeftClaw", leftClawToggle);
         telemetry.addData("RightWing: ", rightWingToggle);
         telemetry.addData("LeftWing", leftWingToggle);
 
@@ -166,49 +174,50 @@ public class arcadeMode extends OpMode {
         //Right Grabber Toggle
         if (gamepad1.b) {
             //add to counter every time button is pressed
-            rightGrabberToggle++;
+            rightClawToggle++;
         }
-        if (rightGrabberToggle % 2 == 0) {
+        if (rightClawToggle % 2 == 0) {
             //toggle to open
-            dragonbot.openRightGrab();
+            dragonbot.openRightClaw();
         } else {
             //turn off the right wing toggle
-            dragonbot.closeRightGrab();
+            dragonbot.closeRightClaw();
         }
 
         //Left Grabber Toggle
         if (gamepad1.a) {
             //add to counter every time button is pressed
-            leftGrabberToggle++;
+            leftClawToggle++;
         }
-        if (leftGrabberToggle % 2 == 0) {
+        if (leftClawToggle % 2 == 0) {
             //toggle to open
-            dragonbot.openLeftGrab();
+            dragonbot.openLeftClaw();
         } else {
             //turn off the right wing toggle
-            dragonbot.closeLeftGrab();
+            dragonbot.closeLeftClaw();
         }
 
 
         //trying different toggle logic
         
        if (gamepad2.a){
-           leftGrabberToggle++;
-           if (leftGrabberToggle > buttonPress){
-               if(leftGrabberToggleStatus == true){
-                   dragonbot.openLeftGrab();
-                   leftGrabberToggleStatus = false;
-                   leftGrabberToggle = 0;
-               } else if (leftGrabberToggleStatus == false){
-                   if (leftGrabberToggle > buttonPress){
-                       dragonbot.closeLeftGrab();
-                       leftGrabberToggleStatus = true;
-                       leftGrabberToggle = 0;
+           rightClawToggle++;
+           if (rightClawToggle > buttonPress){
+               if(rightClawToggleStatus == true){
+                   dragonbot.openRightClaw();
+                   rightClawToggleStatus = false;
+                   rightClawToggle = 0;
+               } else if (rightClawToggleStatus == false){
+                   if (rightClawToggle > buttonPress){
+                       dragonbot.closeRightClaw();
+                       rightClawToggleStatus = true;
+                       rightClawToggle = 0;
                    }
-                   dragonbot.closeLeftGrab();
-                   leftGrabberToggleStatus = true;
+                   dragonbot.closeLeftClaw();
+                   rightClawToggleStatus = true;
                }
            }
+           rightClawToggle = 0;
        }
     }
 }

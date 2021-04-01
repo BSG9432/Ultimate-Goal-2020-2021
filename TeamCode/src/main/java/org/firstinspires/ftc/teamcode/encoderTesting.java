@@ -100,8 +100,8 @@ public class encoderTesting extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
-        bsgbot.closeLeftGrab();
-        bsgbot.closeRightGrab();
+        bsgbot.openLeftClaw();
+        bsgbot.closeRightClaw();
         bsgbot.leftWingUp();
         bsgbot.rightWingUp();
 
@@ -159,7 +159,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.openRightGrab();//drops wobble goal from right side
+        bsgbot.openRightClaw();//drops wobble goal from right side
 
         bsgbot.rightWingUp();//Puts right arm up
 
@@ -169,7 +169,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.closeLeftGrab();//grab new wobble goal with left arm
+        bsgbot.openLeftClaw();//grab new wobble goal with left arm
 
         strafeToPosition(47.326, STRAFE_SPEED);  //Strafe right 47.326 Inches
 
@@ -179,7 +179,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
-        bsgbot.openLeftGrab();//drop wobble goal from left
+        bsgbot.openLeftClaw();//drop wobble goal from left
 
         encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
 
@@ -203,7 +203,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.openLeftGrab();//Drop wobble goal from left arm
+        bsgbot.openLeftClaw();//Drop wobble goal from left arm
 
         bsgbot.leftWingUp();//Puts left arm up
 
@@ -213,7 +213,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
+        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
 
         strafeToPosition(-47.326, STRAFE_SPEED);  //Strafe left 47.326 Inches with 3 Sec timeout
 
@@ -223,7 +223,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
 
-        bsgbot.openRightGrab();//Drop wobble goal with right side
+        bsgbot.openRightClaw();//Drop wobble goal with right side
 
         encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
@@ -249,7 +249,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.openRightGrab();//Drop wobble goal right arm
+        bsgbot.openRightClaw();//Drop wobble goal right arm
 
         bsgbot.rightWingUp();//Puts the right arm up
 
@@ -259,7 +259,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts left wing down
 
-        bsgbot.closeLeftGrab();//Grab new wobble goal with left arm
+        bsgbot.openLeftClaw();//Grab new wobble goal with left arm
 
         strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
@@ -267,7 +267,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
 
-        bsgbot.openLeftGrab();//Drop wobble goal with left arm
+        bsgbot.openLeftClaw();//Drop wobble goal with left arm
 
         encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
 
@@ -292,7 +292,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.openLeftGrab();//Drop wobble goal from left arm
+        bsgbot.openLeftClaw();//Drop wobble goal from left arm
 
         bsgbot.leftWingUp();//Puts the left arm up
 
@@ -302,7 +302,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts right wing down
 
-        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
+        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
 
         strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
@@ -310,7 +310,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
 
-        bsgbot.openLeftGrab();//Drop wobble goal with left arm
+        bsgbot.openLeftClaw();//Drop wobble goal with left arm
 
         encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
 
@@ -332,7 +332,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.openRightGrab();//Drop wobble goal from right arm
+        bsgbot.openRightClaw();//Drop wobble goal from right arm
 
         bsgbot.rightWingUp();//Puts the right arm up
 
@@ -342,7 +342,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.leftWingDown(); //Puts left arm down
 
-        bsgbot.closeLeftGrab();//Grab new wobble goal with left arm
+        bsgbot.openLeftClaw();//Grab new wobble goal with left arm
 
         strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
@@ -350,7 +350,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,27.548,-27.548,3.0);//Pivot Right 180 degrees
 
-        bsgbot.openLeftGrab();//Drop wobble goal from left arm
+        bsgbot.openLeftClaw();//Drop wobble goal from left arm
 
         encoderDrive(DRIVE_SPEED,-13.774,13.774,3.0); //Pivot Left
 
@@ -375,7 +375,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.openLeftGrab();//Drop wobble goal from left
+        bsgbot.openLeftClaw();//Drop wobble goal from left
 
         bsgbot.leftWingUp();//Puts the left arm up
 
@@ -385,7 +385,7 @@ public class encoderTesting extends LinearOpMode {
 
         bsgbot.rightWingDown(); //Puts right arm down
 
-        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
+        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
 
         strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
 
@@ -393,7 +393,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,-27.548,27.548,3.0);//Pivot Left 180 degrees
 
-        bsgbot.openRightGrab();//Drop wobble goal from right side
+        bsgbot.openRightClaw();//Drop wobble goal from right side
 
         encoderDrive(DRIVE_SPEED,13.774,-13.774,3.0); //Pivot Right
 
@@ -448,7 +448,7 @@ public class encoderTesting extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (bsgbot.frontLeft.isBusy() && bsgbot.frontRight.isBusy() && bsgbot.backLeft.isBusy() && bsgbot.backRight.isBusy())) {
+                    ((bsgbot.frontLeft.isBusy() && bsgbot.backLeft.isBusy()) || (bsgbot.frontRight.isBusy() && bsgbot.backRight.isBusy()))) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
