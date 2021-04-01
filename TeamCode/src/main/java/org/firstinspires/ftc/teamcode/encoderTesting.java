@@ -64,9 +64,9 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="dragonDraft")
+@Autonomous(name="encoderTesting")
 //Our Auto paths
-public class dragonDraft extends LinearOpMode {
+public class encoderTesting extends LinearOpMode {
     Robot bsgbot = new Robot();
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -123,7 +123,7 @@ public class dragonDraft extends LinearOpMode {
                 bsgbot.backLeft.getCurrentPosition(),
                 bsgbot.backRight.getCurrentPosition());
         telemetry.update();
-        //AutoTransitioner.transitionOnStop(this, "Robot Teleop");
+        AutoTransitioner.transitionOnStop(this, "Robot Teleop");
 
         bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -134,7 +134,7 @@ public class dragonDraft extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
 
-        redPathA();
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -150,7 +150,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.openRightClaw();//drops wobble goal from right side
+        bsgbot.openRightGrab();//drops wobble goal from right side
 
         bsgbot.rightWingUp();//Puts right arm up
 
@@ -160,7 +160,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.closeLeftClaw();//grab new wobble goal with left arm
+        bsgbot.closeLeftGrab();//grab new wobble goal with left arm
 
         strafeToPosition(47.326, STRAFE_SPEED);  //Strafe right 47.326 Inches
 
@@ -170,7 +170,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
-        bsgbot.openLeftClaw();//drop wobble goal from left
+        bsgbot.openLeftGrab();//drop wobble goal from left
 
         encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
 
@@ -194,7 +194,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.openLeftClaw();//Drop wobble goal from left arm
+        bsgbot.openLeftGrab();//Drop wobble goal from left arm
 
         bsgbot.leftWingUp();//Puts left arm up
 
@@ -204,7 +204,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
+        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
 
         strafeToPosition(-47.326, STRAFE_SPEED);  //Strafe left 47.326 Inches with 3 Sec timeout
 
@@ -214,7 +214,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
 
-        bsgbot.openRightClaw();//Drop wobble goal with right side
+        bsgbot.openRightGrab();//Drop wobble goal with right side
 
         encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
@@ -240,7 +240,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.openRightClaw();//Drop wobble goal right arm
+        bsgbot.openRightGrab();//Drop wobble goal right arm
 
         bsgbot.rightWingUp();//Puts the right arm up
 
@@ -250,7 +250,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts left wing down
 
-        bsgbot.closeLeftClaw();//Grab new wobble goal with left arm
+        bsgbot.closeLeftGrab();//Grab new wobble goal with left arm
 
         strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
@@ -258,7 +258,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
 
-        bsgbot.openLeftClaw();//Drop wobble goal with left arm
+        bsgbot.openLeftGrab();//Drop wobble goal with left arm
 
         encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
 
@@ -283,7 +283,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.openLeftClaw();//Drop wobble goal from left arm
+        bsgbot.openLeftGrab();//Drop wobble goal from left arm
 
         bsgbot.leftWingUp();//Puts the left arm up
 
@@ -293,7 +293,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts right wing down
 
-        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
+        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
 
         strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
@@ -301,7 +301,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
 
-        bsgbot.openLeftClaw();//Drop wobble goal with left arm
+        bsgbot.openLeftGrab();//Drop wobble goal with left arm
 
         encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
 
@@ -323,7 +323,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.rightWingDown();//Puts the right arm down
 
-        bsgbot.openRightClaw();//Drop wobble goal from right arm
+        bsgbot.openRightGrab();//Drop wobble goal from right arm
 
         bsgbot.rightWingUp();//Puts the right arm up
 
@@ -333,7 +333,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.leftWingDown(); //Puts left arm down
 
-        bsgbot.closeLeftClaw();//Grab new wobble goal with left arm
+        bsgbot.closeLeftGrab();//Grab new wobble goal with left arm
 
         strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
@@ -341,7 +341,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,27.548,-27.548,3.0);//Pivot Right 180 degrees
 
-        bsgbot.openLeftClaw();//Drop wobble goal from left arm
+        bsgbot.openLeftGrab();//Drop wobble goal from left arm
 
         encoderDrive(DRIVE_SPEED,-13.774,13.774,3.0); //Pivot Left
 
@@ -366,7 +366,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.leftWingDown();//Puts the left arm down
 
-        bsgbot.openLeftClaw();//Drop wobble goal from left
+        bsgbot.openLeftGrab();//Drop wobble goal from left
 
         bsgbot.leftWingUp();//Puts the left arm up
 
@@ -376,7 +376,7 @@ public class dragonDraft extends LinearOpMode {
 
         bsgbot.rightWingDown(); //Puts right arm down
 
-        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
+        bsgbot.closeRightGrab();//Grab new wobble goal with right arm
 
         strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
 
@@ -384,7 +384,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,-27.548,27.548,3.0);//Pivot Left 180 degrees
 
-        bsgbot.openRightClaw();//Drop wobble goal from right side
+        bsgbot.openRightGrab();//Drop wobble goal from right side
 
         encoderDrive(DRIVE_SPEED,13.774,-13.774,3.0); //Pivot Right
 

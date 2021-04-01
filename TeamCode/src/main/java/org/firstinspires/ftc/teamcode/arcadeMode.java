@@ -13,8 +13,18 @@ public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
     int rightWingToggle = 0;
     int leftWingToggle = 0;
+<<<<<<< HEAD
     int rightClawToggle = 0;
     int leftClawToggle = 0;
+=======
+    int rightGrabberToggle = 0;
+    int leftGrabberToggle = 0;
+    int buttonPress = 10; //check if counter increased to signify a button press
+    boolean rightWingToggleStatus = false;
+    boolean leftWingToggleStatus = false;
+    boolean rightGrabberToggleStatus = false;
+    boolean leftGrabberToggleStatus = false;
+>>>>>>> 6927cef7333c482c5344ba1e9be00be4700dab0f
 
 
     @Override
@@ -190,6 +200,26 @@ public class arcadeMode extends OpMode {
         }
 
 
+        //trying different toggle logic
+        
+       if (gamepad2.a){
+           leftGrabberToggle++;
+           if (leftGrabberToggle > buttonPress){
+               if(leftGrabberToggleStatus == true){
+                   dragonbot.openLeftGrab();
+                   leftGrabberToggleStatus = false;
+                   leftGrabberToggle = 0;
+               } else if (leftGrabberToggleStatus == false){
+                   if (leftGrabberToggle > buttonPress){
+                       dragonbot.closeLeftGrab();
+                       leftGrabberToggleStatus = true;
+                       leftGrabberToggle = 0;
+                   }
+                   dragonbot.closeLeftGrab();
+                   leftGrabberToggleStatus = true;
+               }
+           }
+       }
     }
 }
 
