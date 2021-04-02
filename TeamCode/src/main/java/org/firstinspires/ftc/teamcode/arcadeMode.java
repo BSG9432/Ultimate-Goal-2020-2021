@@ -15,7 +15,7 @@ public class arcadeMode extends OpMode {
     int leftWingToggle = 0;
     int rightClawToggle = 0;
     int leftClawToggle = 0;
-    int buttonPress = 15; //check if counter increased to signify a button press
+    int buttonPress = 23; //check if counter increased to signify a button press
     boolean rightWingToggleStatus = false;
     boolean leftWingToggleStatus = false;
     boolean rightClawToggleStatus = false;
@@ -25,13 +25,16 @@ public class arcadeMode extends OpMode {
     @Override
     public void init() {
         dragonbot.initRobot(hardwareMap);
-        dragonbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        dragonbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        dragonbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        dragonbot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        dragonbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        dragonbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        dragonbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        dragonbot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        dragonbot.leftWingUp();
-        dragonbot.rightWingUp();
+        //dragonbot.leftWingUp();
+        //dragonbot.rightWingUp();
+        dragonbot.rightWing.setPower(0);
+        dragonbot.leftWing.setPower(0);
+
         dragonbot.openLeftClaw();
         dragonbot.openRightClaw();
         dragonbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -145,7 +148,7 @@ public class arcadeMode extends OpMode {
 
 
 
-        //Right Wing Toggle
+        /*//Right Wing Toggle
         if (gamepad1.y) {
             //add to counter every time button is pressed
             rightWingToggle++;
@@ -169,7 +172,7 @@ public class arcadeMode extends OpMode {
         } else {
             //turn off the right wing toggle
             dragonbot.leftWingDown();
-        }
+        }*/
 
         //Right Claw Toggle
         if (gamepad1.b) {
@@ -179,28 +182,34 @@ public class arcadeMode extends OpMode {
         if (rightClawToggle % 2 == 0) {
             //toggle to open
             dragonbot.openRightClaw();
-        } else {
+            rightClawToggle = 0;
+        } else if (rightClawToggle % 2 == 1){
             //turn off the right wing toggle
             dragonbot.closeRightClaw();
+            rightClawToggle = 0;
         }
 
         //Left Claw Toggle
         if (gamepad1.a) {
             //add to counter every time button is pressed
             leftClawToggle++;
+
         }
-        if (leftClawToggle % 2 == 0) {
+        if (leftClawToggle > buttonPress && leftClawToggle % 2 == 0) {
             //toggle to open
             dragonbot.openLeftClaw();
-        } else {
+            leftClawToggle = 0;
+        } else if (leftClawToggle > buttonPress && leftClawToggle % 2 == 1){
             //turn off the right wing toggle
             dragonbot.closeLeftClaw();
+            leftClawToggle = 0;
         }
 
 
         //trying different toggle logic
 
-       if (gamepad2.a){
+       /*if (gamepad2.a){
+           telemetry.addData("Gamepad2", "TRUE");
            rightClawToggle++;
            if (rightClawToggle > buttonPress){
                if(rightClawToggleStatus == true){
@@ -218,6 +227,47 @@ public class arcadeMode extends OpMode {
                }
            }
            rightClawToggle = 0;
-       }
+       }*/
+        //Right Claw Toggle
+        if (gamepad2.b) {
+            //add to counter every time button is pressed
+            rightClawToggle = rightClawToggle++;
+
+            if (rightClawToggle > buttonPress && rightClawToggleStatus == true) {
+                //toggle to open
+                telemetry.addData("Yoink", "IF");
+
+                dragonbot.openRightClaw();
+                rightClawToggleStatus = false;
+                rightClawToggle = 0;
+            } else if (rightClawToggle > buttonPress && rightClawToggleStatus == false){
+                //turn off the right wing toggle
+                telemetry.addData("Yoink", "ELSE IF");
+
+                dragonbot.closeRightClaw();
+                rightClawToggleStatus = true;
+                rightClawToggle = 0;
+            } else {
+                telemetry.addData("Yoink", "ELSE");
+
+                rightClawToggle++;
+            }
+        }
+
+        //Left Claw Toggle
+        if (gamepad1.a) {
+            //add to counter every time button is pressed
+            leftClawToggle++;
+
+        }
+        if (leftClawToggle > buttonPress && leftClawToggle % 2 == 0) {
+            //toggle to open
+            dragonbot.openLeftClaw();
+            leftClawToggle = 0;
+        } else if (leftClawToggle > buttonPress && leftClawToggle % 2 == 1){
+            //turn off the right wing toggle
+            dragonbot.closeLeftClaw();
+            leftClawToggle = 0;
+        }
     }
 }

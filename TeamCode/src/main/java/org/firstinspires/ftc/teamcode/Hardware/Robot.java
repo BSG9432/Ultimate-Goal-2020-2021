@@ -20,8 +20,8 @@ public class Robot {
 
     public Servo leftClaw;
     public Servo rightClaw;
-    public Servo leftWing; //not finalized (we don't know if it'll be able to support wobble)
-    public Servo rightWing;
+    public DcMotor leftWing;
+    public DcMotor rightWing;
 
     public Telemetry telemetry;
 
@@ -42,8 +42,8 @@ public class Robot {
 
         leftClaw = hardwareMap.servo.get("leftClaw");
         rightClaw = hardwareMap.servo.get("rightClaw");
-        leftWing = hardwareMap.servo.get("leftWing");
-        rightWing = hardwareMap.servo.get("rightWing");
+        leftWing = hardwareMap.dcMotor.get("leftWing");
+        rightWing = hardwareMap.dcMotor.get("rightWing");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -98,17 +98,17 @@ public class Robot {
     }
     //Wings Up
     public void leftWingUp (){
-        leftWing.setPosition(0);
+        leftWing.setPower(-.4);
     }
     public void rightWingUp () {
-        rightWing.setPosition(.7);
+        rightWing.setPower(.4);
     }
     //Wings Down
     public void leftWingDown (){
-        leftWing.setPosition(.7);
+        leftWing.setPower(.4);
     }
     public void rightWingDown () {
-        rightWing.setPosition(0);
+        rightWing.setPower(-.4);
     }
 
 }

@@ -74,26 +74,22 @@ public class dragonDraft extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //counts per motor rev = ticks per rev
-    static final double COUNTS_PER_MOTOR_REV = 1120;    // NeveRest 40
+    static final double COUNTS_PER_MOTOR_REV = 537.6;    // NeveRest 20
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = 0.7;
-    static final double STRAFE_SPEED = 0.5;
+    static final double DRIVE_SPEED = 0.5;
+    static final double STRAFE_SPEED = 0.4;
     static final double TURN_SPEED = 0.5;
 
     //For strafing with encoders
-    Integer cpr = 28; //counts per rotation
-    Integer gearratio = 40; //because NeveRest 40
+    Integer cpr = 7; //counts per rotation
+    Integer gearratio = 20; //because NeveRest 40
     Double diameter = 4.0;
     Double cpi = (cpr * gearratio) / (Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
-    Double bias = 0.8;//default 0.8
-    Double meccyBias = 1.2; //change to adjust only strafing movement (was .9)
+    Double meccyBias = .7; //change to adjust only strafing movement (was .9)
     //
-    Double conversion = cpi * bias;
-    Boolean exit = false;
-
     @Override
     public void runOpMode() {
 
@@ -104,8 +100,7 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.initRobot(hardwareMap);
         bsgbot.closeLeftClaw();
         bsgbot.closeRightClaw();
-        bsgbot.leftWingUp();
-        bsgbot.rightWingUp();
+
 
 
 
@@ -141,7 +136,12 @@ public class dragonDraft extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
+        leftWingEncoder(.4,400,2);
+        rightWingEncoder(.4,-400,2);
 
+        //wings down?
+        leftWingEncoder(.4,-400,2);
+        rightWingEncoder(.4,400,2);
         bluePathA();
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -156,17 +156,17 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0);//Pivot Left
 
-        bsgbot.rightWingDown();//Puts the right arm down
+        rightWingDown();//Puts the right arm down
 
         bsgbot.openRightClaw();//drops wobble goal from right side
 
-        bsgbot.rightWingUp();//Puts right arm up
+        rightWingUp();//Puts right arm up
 
         encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0); //Forward 33.326 Inches
 
         strafeToPosition(-35.326, STRAFE_SPEED);  //Strafe left 35.326 Inches
 
-        bsgbot.leftWingDown();//Puts the left arm down
+        leftWingDown();//Puts the left arm down
 
         bsgbot.closeLeftClaw();//grab new wobble goal with left arm
 
@@ -200,17 +200,17 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0);//Pivot right
 
-        bsgbot.leftWingDown();//Puts the left arm down
+        leftWingDown();//Puts the left arm down
 
         bsgbot.openLeftClaw();//Drop wobble goal from left arm
 
-        bsgbot.leftWingUp();//Puts left arm up
+        leftWingUp();//Puts left arm up
 
         encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0);// Forward 33.326 Inches with 3 Sec timeout
 
         strafeToPosition(35.326, STRAFE_SPEED);//Strafe right 35.326 Inches with 3 Sec timeout
 
-        bsgbot.rightWingDown();//Puts the right arm down
+        rightWingDown();//Puts the right arm down
 
         bsgbot.closeRightClaw();//Grab new wobble goal with right arm
 
@@ -246,17 +246,17 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,24,24,3.0);//Forward 24 Inches
 
-        bsgbot.rightWingDown();//Puts the right arm down
+        rightWingDown();//Puts the right arm down
 
         bsgbot.openRightClaw();//Drop wobble goal right arm
 
-        bsgbot.rightWingUp();//Puts the right arm up
+        rightWingUp();//Puts the right arm up
 
         encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Move forward 45.366 Inches with 3 Sec timeout
 
         strafeToPosition(-35.326, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
 
-        bsgbot.leftWingDown();//Puts left wing down
+        leftWingDown();//Puts left wing down
 
         bsgbot.closeLeftClaw();//Grab new wobble goal with left arm
 
@@ -289,7 +289,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED,24,24,3.0);//Forward 24 Inches
 
-        bsgbot.leftWingDown();//Puts the left arm down
+        leftWingDown();//Puts the left arm down
 
         bsgbot.openLeftClaw();//Drop wobble goal from left arm
 
@@ -299,7 +299,7 @@ public class dragonDraft extends LinearOpMode {
 
         strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
 
-        bsgbot.rightWingDown();//Puts right wing down
+        rightWingDown();//Puts right wing down
 
         bsgbot.closeRightClaw();//Grab new wobble goal with right arm
 
@@ -329,7 +329,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
 
-        bsgbot.rightWingDown();//Puts the right arm down
+        rightWingDown();//Puts the right arm down
 
         bsgbot.openRightClaw();//Drop wobble goal from right arm
 
@@ -339,7 +339,7 @@ public class dragonDraft extends LinearOpMode {
 
         strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 86.634 Inches with 3 Sec timeout
 
-        bsgbot.leftWingDown(); //Puts left arm down
+        leftWingDown(); //Puts left arm down
 
         bsgbot.closeLeftClaw();//Grab new wobble goal with left arm
 
@@ -372,7 +372,7 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
 
-        bsgbot.leftWingDown();//Puts the left arm down
+        leftWingDown();//Puts the left arm down
 
         bsgbot.openLeftClaw();//Drop wobble goal from left
 
@@ -382,7 +382,7 @@ public class dragonDraft extends LinearOpMode {
 
         strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 86.634 Inches with 3 Sec timeout
 
-        bsgbot.rightWingDown(); //Puts right arm down
+        rightWingDown(); //Puts right arm down
 
         bsgbot.closeRightClaw();//Grab new wobble goal with right arm
 
@@ -514,4 +514,100 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.backLeft.setPower(0);
         return;
     }
+    //encoders for wings
+    public void rightWingEncoder(double speed,
+                           int targetTicks, double timeoutS) {
+        int newTarget;
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newTarget = bsgbot.rightWing.getCurrentPosition() + (int) (targetTicks);
+
+            bsgbot.rightWing.setTargetPosition(newTarget);
+
+            // Turn On RUN_TO_POSITION
+            bsgbot.rightWing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            bsgbot.rightWing.setPower(Math.abs(speed));
+
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS)) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Right Wing Running to  :%7d", targetTicks);
+                telemetry.addData("Path2", "Running at 3 :%7d",
+                        bsgbot.rightWing.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            bsgbot.rightWing.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            bsgbot.rightWing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            sleep(250);   // optional pause after each move
+        }
+    }
+    //encoders for wings
+    public void leftWingEncoder(double speed,
+                                 int targetTicks, double timeoutS) {
+        int newTarget;
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newTarget = bsgbot.leftWing.getCurrentPosition() + (int) (targetTicks);
+
+            bsgbot.leftWing.setTargetPosition(newTarget);
+
+            // Turn On RUN_TO_POSITION
+            bsgbot.leftWing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            bsgbot.leftWing.setPower(Math.abs(speed));
+
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS)) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Left Wing running to  :%7d", targetTicks);
+                telemetry.addData("Path2", "Running at 3 :%7d",
+                        bsgbot.leftWing.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            bsgbot.leftWing.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            bsgbot.leftWing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            sleep(250);   // optional pause after each move
+        }
+    }
+    //Wings Up
+    public void leftWingUp (){
+        bsgbot.leftWing.setPower(-.4);
+        //wings down?
+        leftWingEncoder(.4,-400,2);
+    }
+    public void rightWingUp () {
+        rightWingEncoder(.4,400,2);
+    }
+    //Wings Down
+    public void leftWingDown (){
+        leftWingEncoder(.4,400,2);
+    }
+    public void rightWingDown () {
+        rightWingEncoder(.4,-400,2);    }
+
 }
