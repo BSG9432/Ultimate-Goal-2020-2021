@@ -142,7 +142,7 @@ public class dragonDraft extends LinearOpMode {
         //wings down?
         leftWingEncoder(.4,-400,2);
         rightWingEncoder(.4,400,2);
-        bluePathA();
+       // bluePathA();
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -515,6 +515,7 @@ public class dragonDraft extends LinearOpMode {
         return;
     }
     //encoders for wings
+    //420 ppr
     public void rightWingEncoder(double speed,
                            int targetTicks, double timeoutS) {
         int newTarget;

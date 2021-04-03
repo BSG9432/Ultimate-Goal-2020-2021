@@ -94,7 +94,7 @@ public class Robot {
         leftClaw.setPosition(.4);//We can't test these values yet but this is supposed to grab
     }
     public void closeRightClaw () {
-        rightClaw.setPosition(.8);// We can't test these values yet but this is supposed to grab
+        rightClaw.setPosition(.77);// We can't test these values yet but this is supposed to grab
     }
     //Wings Up
     public void leftWingUp (){
