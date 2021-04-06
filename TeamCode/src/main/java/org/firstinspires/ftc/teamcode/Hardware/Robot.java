@@ -19,9 +19,9 @@ public class Robot {
     public DcMotor conveyor;
 
     public Servo leftClaw;
-    public Servo rightClaw;
+    //public Servo rightClaw;
     public DcMotor leftWing;
-    public DcMotor rightWing;
+    //public DcMotor rightWing;
 
     public Telemetry telemetry;
 
@@ -41,9 +41,9 @@ public class Robot {
         conveyor = hardwareMap.dcMotor.get("conveyor");
 
         leftClaw = hardwareMap.servo.get("leftClaw");
-        rightClaw = hardwareMap.servo.get("rightClaw");
+        //Claw = hardwareMap.servo.get("rightClaw");
         leftWing = hardwareMap.dcMotor.get("leftWing");
-        rightWing = hardwareMap.dcMotor.get("rightWing");
+        //rightWing = hardwareMap.dcMotor.get("rightWing");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -85,30 +85,32 @@ public class Robot {
     public void openLeftClaw() {
         leftClaw.setPosition(.8);//We can't test these values yet but this is supposed to grab
     }
-    public void openRightClaw() {
+    /*public void openRightClaw() {
         rightClaw.setPosition(.4);// We can't test these values yet but this is supposed to grab
-    }
+    }*/
 
     //close Claws
     public void closeLeftClaw () {
         leftClaw.setPosition(.4);//We can't test these values yet but this is supposed to grab
     }
-    public void closeRightClaw () {
+    /*public void closeRightClaw () {
         rightClaw.setPosition(.77);// We can't test these values yet but this is supposed to grab
-    }
+    }*/
     //Wings Up
     public void leftWingUp (){
         leftWing.setPower(-.4);
     }
+    /*
     public void rightWingUp () {
         rightWing.setPower(.4);
-    }
+    }*/
     //Wings Down
     public void leftWingDown (){
         leftWing.setPower(.4);
     }
+    /*
     public void rightWingDown () {
         rightWing.setPower(-.4);
-    }
+    }*/
 
 }

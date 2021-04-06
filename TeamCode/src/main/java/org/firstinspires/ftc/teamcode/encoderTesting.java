@@ -66,6 +66,7 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+@Disabled
 @Autonomous(name="encoderTesting")
 //Our Auto paths
 public class encoderTesting extends LinearOpMode {
@@ -103,7 +104,7 @@ public class encoderTesting extends LinearOpMode {
          */
         bsgbot.initRobot(hardwareMap);
         bsgbot.closeLeftClaw();
-        bsgbot.closeRightClaw();
+        //bsgbot.closeRightClaw();
 
 
 
@@ -141,12 +142,12 @@ public class encoderTesting extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         //wings up?
-        leftWingEncoder(.4,400,2);
-        rightWingEncoder(.4,-400,2);
+        //leftWingEncoder(.4,400,2);
+        //rightWingEncoder(.4,-400,2);
 
         //wings down?
-        leftWingEncoder(.4,-400,2);
-        rightWingEncoder(.4,400,2);
+        //leftWingEncoder(.4,-400,2);
+        //rightWingEncoder(.4,400,2);
 
         /*encoderDrive(DRIVE_SPEED, 0, 30, 5.0);
         encoderDrive(DRIVE_SPEED, 30, 0, 5.0);
@@ -156,7 +157,7 @@ public class encoderTesting extends LinearOpMode {
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-
+/*
     // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
     public void redPathA() {
         //Aila: Red Path --> A (Be on the right of the wobble)
@@ -604,5 +605,7 @@ public class encoderTesting extends LinearOpMode {
             sleep(250);   // optional pause after each move
         }
     }
+
+ */
 
 }

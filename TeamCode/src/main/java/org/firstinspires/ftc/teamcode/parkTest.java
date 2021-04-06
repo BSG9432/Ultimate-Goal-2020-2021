@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -66,8 +67,9 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name="parkTest")
-//Our Auto paths
+@Autonomous(name="parkTest", group="working")
+//Simple wait-time code to drive up to low goal, outtake rings, and park
+//WORKING
 public class parkTest extends LinearOpMode {
     Robot bsgbot = new Robot();
 
@@ -99,7 +101,9 @@ public class parkTest extends LinearOpMode {
          */
         bsgbot.initRobot(hardwareMap);
         bsgbot.closeLeftClaw();
-        bsgbot.closeRightClaw();
+        //bsgbot.closeRightClaw();
+        //bsgbot.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //bsgbot.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
@@ -108,15 +112,15 @@ public class parkTest extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       // bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       // bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         //
@@ -126,17 +130,42 @@ public class parkTest extends LinearOpMode {
                 bsgbot.backLeft.getCurrentPosition(),
                 bsgbot.backRight.getCurrentPosition());
         telemetry.update();
-        //AutoTransitioner.transitionOnStop(this, "Robot Teleop");
+        AutoTransitioner.transitionOnStop(this, "arcadeMode");
 
         bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bsgbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bsgbot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //bsgbot.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
-        encoderDrive(.5, 84, 84, 3.0);
+        //drive up to the low goal
+        bsgbot.frontLeft.setPower(.4);
+        bsgbot.frontRight.setPower(-.4);
+        bsgbot.backLeft.setPower(-.4);
+        bsgbot.backRight.setPower(-.4);
+        sleep(4000);
+
+        //run conveyor to outtake rings for 10 seconds
+        bsgbot.conveyor.setPower(1);
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.frontRight.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        bsgbot.backRight.setPower(0);
+        sleep(10000);
+
+        //drive forwards to park
+        bsgbot.frontLeft.setPower(-.4);
+        bsgbot.frontRight.setPower(.4);
+        bsgbot.backLeft.setPower(.4);
+        bsgbot.backRight.setPower(.4);
+        sleep(1500);
+
+        //redPath();
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -213,7 +242,7 @@ public class parkTest extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (bsgbot.frontLeft.isBusy() && bsgbot.frontRight.isBusy() && bsgbot.backLeft.isBusy() && bsgbot.backRight.isBusy())) {
+                    ((bsgbot.frontLeft.isBusy() && bsgbot.backLeft.isBusy()) || (bsgbot.frontRight.isBusy() && bsgbot.backRight.isBusy()))) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
@@ -280,6 +309,7 @@ public class parkTest extends LinearOpMode {
         bsgbot.backLeft.setPower(0);
         return;
     }
+    /*
     //encoders for wings
     public void rightWingEncoder(double speed,
                                  int targetTicks, double timeoutS) {
@@ -319,7 +349,7 @@ public class parkTest extends LinearOpMode {
 
             sleep(250);   // optional pause after each move
         }
-    }
+    } */
     //encoders for wings
     public void leftWingEncoder(double speed,
                                 int targetTicks, double timeoutS) {
@@ -366,14 +396,15 @@ public class parkTest extends LinearOpMode {
         //wings down?
         leftWingEncoder(.4,-400,2);
     }
-    public void rightWingUp () {
+    /*public void rightWingUp () {
         rightWingEncoder(.4,400,2);
-    }
+    }*/
     //Wings Down
     public void leftWingDown (){
         leftWingEncoder(.4,400,2);
     }
+    /*
     public void rightWingDown () {
-        rightWingEncoder(.4,-400,2);    }
+        rightWingEncoder(.4,-400,2);    }*/
 
 }
