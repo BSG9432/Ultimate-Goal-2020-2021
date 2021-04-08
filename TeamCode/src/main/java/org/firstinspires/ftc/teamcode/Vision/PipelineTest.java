@@ -11,7 +11,6 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
-@Disabled
 @TeleOp
 public class PipelineTest extends OpenCvPipeline {
     int lastResult = 0;

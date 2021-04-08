@@ -67,8 +67,10 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+@Disabled
 @Autonomous(name="ParkOwO")
 //Our Auto paths
+//Wait time path to park. That's it.
 public class ParkOwO extends LinearOpMode {
     Robot bsgbot = new Robot();
 
@@ -99,7 +101,7 @@ public class ParkOwO extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
-        bsgbot.closeLeftClaw();
+        bsgbot.closeClaw();
         //bsgbot.closeRightClaw();
         //bsgbot.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //bsgbot.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -334,7 +336,7 @@ public class ParkOwO extends LinearOpMode {
 
             sleep(250);   // optional pause after each move
         }
-    } */
+    }
     //encoders for wings
     public void leftWingEncoder(double speed,
                                 int targetTicks, double timeoutS) {
@@ -377,18 +379,18 @@ public class ParkOwO extends LinearOpMode {
     }
     //Wings Up
     public void leftWingUp (){
-        bsgbot.leftWing.setPower(-.4);
+        //bsgbot.leftWing.setPower(-.4);
         //wings down?
         leftWingEncoder(.4,-400,2);
     }
     /*public void rightWingUp () {
         rightWingEncoder(.4,400,2);
-    }*/
+    }
     //Wings Down
     public void leftWingDown (){
         leftWingEncoder(.4,400,2);
     }
-    /*
+
     public void rightWingDown () {
         rightWingEncoder(.4,-400,2);    }*/
 

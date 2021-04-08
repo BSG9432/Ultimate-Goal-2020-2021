@@ -25,10 +25,10 @@ public class arcadeMode extends OpMode {
         //dragonbot.leftWingUp();
         //dragonbot.rightWingUp();
         //dragonbot.rightWing.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        dragonbot.leftWing.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        dragonbot.wing.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
-        dragonbot.openLeftClaw();
+        dragonbot.openClaw();
         //dragonbot.openRightClaw();
 
 
@@ -43,13 +43,13 @@ public class arcadeMode extends OpMode {
         telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
 
         //telemetry.addData("Right Wing", dragonbot.rightWing);
-        telemetry.addData("Left Wing", dragonbot.leftWing);
+        telemetry.addData("Left Wing", dragonbot.wing);
 
         telemetry.update();
 
         // Driving forwards and backwards using left_stick_y
         if (Math.abs(gamepad1.left_stick_y) > .1 && Math.abs(gamepad1.left_stick_x) < .3) {
-            dragonbot.frontLeft.setPower(gamepad1.left_stick_y);
+            dragonbot.frontLeft.setPower(-gamepad1.left_stick_y);
             dragonbot.frontRight.setPower(-gamepad1.left_stick_y);
             dragonbot.backLeft.setPower(-gamepad1.left_stick_y);
             dragonbot.backRight.setPower(-gamepad1.left_stick_y);
@@ -62,7 +62,7 @@ public class arcadeMode extends OpMode {
         }
         //Left strafe when left_stick_x is negative (left)
         if (gamepad1.left_stick_x < -.1 && Math.abs(gamepad1.left_stick_y) < .3) {
-            dragonbot.frontLeft.setPower(-gamepad1.left_stick_x);
+            dragonbot.frontLeft.setPower(gamepad1.left_stick_x);
             dragonbot.frontRight.setPower(-gamepad1.left_stick_x);
             dragonbot.backLeft.setPower(-gamepad1.left_stick_x);
             dragonbot.backRight.setPower(gamepad1.left_stick_x);
@@ -74,7 +74,7 @@ public class arcadeMode extends OpMode {
         }
         //Right strafe when left_stick_x is positive (right)
         if (gamepad1.left_stick_x > .1 && Math.abs(gamepad1.left_stick_y) < .3) {
-            dragonbot.frontLeft.setPower(-gamepad1.left_stick_x);
+            dragonbot.frontLeft.setPower(gamepad1.left_stick_x);
             dragonbot.frontRight.setPower(-gamepad1.left_stick_x);
             dragonbot.backLeft.setPower(-gamepad1.left_stick_x);
             dragonbot.backRight.setPower(gamepad1.left_stick_x);
@@ -86,7 +86,7 @@ public class arcadeMode extends OpMode {
         }
         //Rotate counterclockwise (pivot turn left) when right stick is pressed to the left
         if (gamepad1.right_stick_x < -.1) {
-            dragonbot.frontLeft.setPower(-gamepad1.right_stick_x);
+            dragonbot.frontLeft.setPower(gamepad1.right_stick_x);
             dragonbot.frontRight.setPower(-gamepad1.right_stick_x);
             dragonbot.backLeft.setPower(gamepad1.right_stick_x);
             dragonbot.backRight.setPower(-gamepad1.right_stick_x);
@@ -98,7 +98,7 @@ public class arcadeMode extends OpMode {
         }
         //Rotate clockwise (pivot turn right) when right stick is pressed to the right
         if (gamepad1.right_stick_x > .1) {
-            dragonbot.frontLeft.setPower(-gamepad1.right_stick_x);
+            dragonbot.frontLeft.setPower(gamepad1.right_stick_x);
             dragonbot.frontRight.setPower(-gamepad1.right_stick_x);
             dragonbot.backLeft.setPower(gamepad1.right_stick_x);
             dragonbot.backRight.setPower(-gamepad1.right_stick_x);
@@ -138,10 +138,10 @@ public class arcadeMode extends OpMode {
 
          */
         if(gamepad1.dpad_up){
-            dragonbot.closeLeftClaw();
+            dragonbot.closeClaw();
         }
         if(gamepad1.dpad_down){
-            dragonbot.openLeftClaw();
+            dragonbot.openClaw();
         }
         /*
         if(gamepad1.dpad_right){
@@ -154,16 +154,16 @@ public class arcadeMode extends OpMode {
 
         //left Wing Up
         if (gamepad1.x) {
-            dragonbot.leftWing.setPower(-.9);
+            dragonbot.wing.setPower(-.9);
         } else {
-            dragonbot.leftWing.setPower(0);
+            dragonbot.wing.setPower(0);
         }
 
         if(gamepad1.a) {
             //right wing down
-            dragonbot.leftWing.setPower(.3);
+            dragonbot.wing.setPower(.3);
         } else {
-            dragonbot.leftWing.setPower(0);
+            dragonbot.wing.setPower(0);
         }
 
 

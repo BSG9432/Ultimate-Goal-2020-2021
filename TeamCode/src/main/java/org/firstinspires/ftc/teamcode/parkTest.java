@@ -69,7 +69,7 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  */
 @Autonomous(name="parkTest", group="working")
 //Simple wait-time code to drive up to low goal, outtake rings, and park
-//WORKING
+//WORKING Red and Blue paths to outtake preloaded rings and park on line
 public class parkTest extends LinearOpMode {
     Robot bsgbot = new Robot();
 
@@ -90,7 +90,8 @@ public class parkTest extends LinearOpMode {
     Integer gearratio = 20; //because NeveRest 40
     Double diameter = 4.0;
     Double cpi = (cpr * gearratio) / (Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
-    Double meccyBias = .7; //change to adjust only strafing movement (was .9)
+    Double bias = .57;//default 0.4
+    Double meccyBias = 4.0; //change to adjust only strafing movement
     //
     @Override
     public void runOpMode() {
@@ -100,7 +101,7 @@ public class parkTest extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
-        bsgbot.closeLeftClaw();
+        bsgbot.closeClaw();
         //bsgbot.closeRightClaw();
         //bsgbot.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //bsgbot.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -112,15 +113,15 @@ public class parkTest extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        //bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       // bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       // bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         //
@@ -143,7 +144,42 @@ public class parkTest extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
-        //drive up to the low goal
+        redPath();
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+    }
+
+    // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
+    public void redPath() {
+        strafeToPosition(-16,STRAFE_SPEED);//Strafe LEFT 16 Inches
+
+        encoderDrive(DRIVE_SPEED,-113,-113,10.0);//Drive FORWARD 120 Inches
+
+        bsgbot.conveyor.setPower(1);//Run conveyor
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.frontRight.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        bsgbot.backRight.setPower(0);
+        sleep(5000);//Keep running until all 3 have been shot
+
+        encoderDrive(DRIVE_SPEED -0.2,40,40,10.0);//Drive FORWARD 12 Inches
+    }
+    public void bluePath() {
+        strafeToPosition(16,STRAFE_SPEED);//Strafe RIGHT 12 Inches
+
+        encoderDrive(DRIVE_SPEED,-113,-113,10.0);//Drive FORWARD 120 Inches
+
+        bsgbot.conveyor.setPower(1);//Run conveyor
+
+        sleep(5000);//Keep running until all 3 have been shot
+
+        encoderDrive(DRIVE_SPEED -0.2,40,40,10.0);//Drive FORWARD 12 Inches
+
+    }
+    public void waitTimePath(){
+        //For worst case scenario purposes if encoders don't want to cooperate
+
+         //drive up to the low goal
         bsgbot.frontLeft.setPower(.4);
         bsgbot.frontRight.setPower(-.4);
         bsgbot.backLeft.setPower(-.4);
@@ -164,42 +200,6 @@ public class parkTest extends LinearOpMode {
         bsgbot.backLeft.setPower(.4);
         bsgbot.backRight.setPower(.4);
         sleep(1500);
-
-        //redPath();
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-    }
-
-    // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
-    public void redPath() {
-        strafeToPosition(12,STRAFE_SPEED);//Strafe RIGHT 12 Inches
-
-        encoderDrive(DRIVE_SPEED,120,120,3.0);//Drive FORWARD 120 Inches
-
-        strafeToPosition(-24,STRAFE_SPEED);//Strafe LEFT 24 Inches
-
-        encoderDrive(DRIVE_SPEED,12,12,3.0);//Drive FORWARD 12 Inches
-
-        bsgbot.conveyor.setPower(1);//Run conveyor
-
-        sleep(3000);//Keep running until all 3 have been shot
-
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0);//Backward 60 Inches
-    }
-    public void bluePath() {
-        strafeToPosition(-12,STRAFE_SPEED);//Strafe LEFT 12 Inches
-
-        encoderDrive(DRIVE_SPEED,120,120,3.0);//Drive FORWARD 120 Inches
-
-        strafeToPosition(24,STRAFE_SPEED);//Strafe LEFT RIGHT Inches
-
-        encoderDrive(DRIVE_SPEED,12,12,3.0);//Drive FORWARD 12 Inches
-
-        bsgbot.conveyor.setPower(1);//Run conveyor
-
-        sleep(3000);//Keep running until all 3 have been shot
-
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0);//Backward 60 Inches
     }
 
     public void encoderDrive(double speed, double leftInches,
@@ -210,11 +210,21 @@ public class parkTest extends LinearOpMode {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
-            // Determine new target position, and pass to motor controller
-            newLeftTarget = bsgbot.frontLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = bsgbot.frontRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
-            newLeftTarget = bsgbot.backLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = bsgbot.backRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            newLeftTarget = bsgbot.frontLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH * bias);
+            newRightTarget = bsgbot.frontRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH * bias);
+            newLeftTarget = bsgbot.backLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH * bias);
+            newRightTarget = bsgbot.backRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH * bias);
 
             bsgbot.frontLeft.setTargetPosition(newLeftTarget);
             bsgbot.frontRight.setTargetPosition(newRightTarget);
@@ -242,7 +252,7 @@ public class parkTest extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    ((bsgbot.frontLeft.isBusy() && bsgbot.backLeft.isBusy()) || (bsgbot.frontRight.isBusy() && bsgbot.backRight.isBusy()))) {
+                    (bsgbot.frontLeft.isBusy() && bsgbot.backLeft.isBusy() && bsgbot.frontRight.isBusy() && bsgbot.backRight.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
@@ -273,6 +283,15 @@ public class parkTest extends LinearOpMode {
 
     //strafing with encoders
     public void strafeToPosition(double inches, double speed) {
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         int move = (int) (Math.round(inches * cpi * meccyBias * 1.265));
 
         bsgbot.backLeft.setTargetPosition(bsgbot.backLeft.getCurrentPosition() - move);
@@ -309,66 +328,26 @@ public class parkTest extends LinearOpMode {
         bsgbot.backLeft.setPower(0);
         return;
     }
-    /*
+
     //encoders for wings
-    public void rightWingEncoder(double speed,
-                                 int targetTicks, double timeoutS) {
-        int newTarget;
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newTarget = bsgbot.rightWing.getCurrentPosition() + (int) (targetTicks);
-
-            bsgbot.rightWing.setTargetPosition(newTarget);
-
-            // Turn On RUN_TO_POSITION
-            bsgbot.rightWing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            bsgbot.rightWing.setPower(Math.abs(speed));
-
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS)) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Right Wing Running to  :%7d", targetTicks);
-                telemetry.addData("Path2", "Running at 3 :%7d",
-                        bsgbot.rightWing.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            bsgbot.rightWing.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            bsgbot.rightWing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-            sleep(250);   // optional pause after each move
-        }
-    } */
-    //encoders for wings
-    public void leftWingEncoder(double speed,
+    public void wingEncoder(double speed,
                                 int targetTicks, double timeoutS) {
         int newTarget;
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newTarget = bsgbot.leftWing.getCurrentPosition() + (int) (targetTicks);
+            newTarget = bsgbot.wing.getCurrentPosition() + (int) (targetTicks);
 
-            bsgbot.leftWing.setTargetPosition(newTarget);
+            bsgbot.wing.setTargetPosition(newTarget);
 
             // Turn On RUN_TO_POSITION
-            bsgbot.leftWing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.wing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
             // reset the timeout time and start motion.
             runtime.reset();
-            bsgbot.leftWing.setPower(Math.abs(speed));
+            bsgbot.wing.setPower(Math.abs(speed));
 
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS)) {
@@ -376,35 +355,31 @@ public class parkTest extends LinearOpMode {
                 // Display it for the driver.
                 telemetry.addData("Path1", "Left Wing running to  :%7d", targetTicks);
                 telemetry.addData("Path2", "Running at 3 :%7d",
-                        bsgbot.leftWing.getCurrentPosition());
+                        bsgbot.wing.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            bsgbot.leftWing.setPower(0);
+            bsgbot.wing.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            bsgbot.leftWing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.wing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
             sleep(250);   // optional pause after each move
         }
     }
     //Wings Up
-    public void leftWingUp (){
-        bsgbot.leftWing.setPower(-.4);
+    public void wingUp (){
+        bsgbot.wing.setPower(-.4);
         //wings down?
-        leftWingEncoder(.4,-400,2);
+        wingEncoder(.4,-400,2);
     }
-    /*public void rightWingUp () {
-        rightWingEncoder(.4,400,2);
-    }*/
+
     //Wings Down
-    public void leftWingDown (){
-        leftWingEncoder(.4,400,2);
+    public void wingDown (){
+        wingEncoder(.4,400,2);
     }
-    /*
-    public void rightWingDown () {
-        rightWingEncoder(.4,-400,2);    }*/
+
 
 }

@@ -18,10 +18,11 @@ public class Robot {
     public DcMotor intake;
     public DcMotor conveyor;
 
-    public Servo leftClaw;
+    public Servo claw;
     //public Servo rightClaw;
-    public DcMotor leftWing;
+    public DcMotor wing;
     //public DcMotor rightWing;
+    //public DcMotor flywheel;
 
     public Telemetry telemetry;
 
@@ -29,7 +30,6 @@ public class Robot {
     public Robot() {
 
     }
-//Claws need to be changed to motors
     //initialize our hardware
     public void initRobot(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
@@ -37,17 +37,17 @@ public class Robot {
         backLeft = hardwareMap.dcMotor.get("backLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
 
-        intake = hardwareMap.dcMotor.get("intake");
-        conveyor = hardwareMap.dcMotor.get("conveyor");
+        intake = hardwareMap.dcMotor.get("intake"); //3
+        conveyor = hardwareMap.dcMotor.get("conveyor"); //2
 
-        leftClaw = hardwareMap.servo.get("leftClaw");
-        //Claw = hardwareMap.servo.get("rightClaw");
-        leftWing = hardwareMap.dcMotor.get("leftWing");
-        //rightWing = hardwareMap.dcMotor.get("rightWing");
+        claw = hardwareMap.servo.get("claw"); //5
+        wing = hardwareMap.dcMotor.get("wing");
+
+        //flywheel = hardwareMap.dcMotor.get("flywheel");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
@@ -82,35 +82,23 @@ public class Robot {
     }
 
     //open Claws
-    public void openLeftClaw() {
-        leftClaw.setPosition(.8);//We can't test these values yet but this is supposed to grab
+    public void openClaw() {
+        claw.setPosition(.8);//We can't test these values yet but this is supposed to grab
     }
-    /*public void openRightClaw() {
-        rightClaw.setPosition(.4);// We can't test these values yet but this is supposed to grab
-    }*/
 
     //close Claws
-    public void closeLeftClaw () {
-        leftClaw.setPosition(.4);//We can't test these values yet but this is supposed to grab
+    public void closeClaw () {
+        claw.setPosition(.4);//We can't test these values yet but this is supposed to grab
     }
-    /*public void closeRightClaw () {
-        rightClaw.setPosition(.77);// We can't test these values yet but this is supposed to grab
-    }*/
+
     //Wings Up
-    public void leftWingUp (){
-        leftWing.setPower(-.4);
+    public void wingUp (){
+        wing.setPower(-.4);
     }
-    /*
-    public void rightWingUp () {
-        rightWing.setPower(.4);
-    }*/
+
     //Wings Down
-    public void leftWingDown (){
-        leftWing.setPower(.4);
+    public void wingDown () {
+        wing.setPower(.4);
     }
-    /*
-    public void rightWingDown () {
-        rightWing.setPower(-.4);
-    }*/
 
 }

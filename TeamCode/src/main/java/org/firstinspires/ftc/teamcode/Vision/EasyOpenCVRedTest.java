@@ -36,10 +36,9 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-@Disabled
-@TeleOp
+@TeleOp (name = "EasyOpenCVRedTest")
 public class EasyOpenCVRedTest extends LinearOpMode {
-    Robot bsgBot = new Robot();
+   // Robot bsgBot = new Robot();
     OpenCvCamera webcam; //named webby in config
 
     PipelineTest pipeline;
@@ -47,7 +46,7 @@ public class EasyOpenCVRedTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         //initialize robot hardware
-        bsgBot.initRobot(hardwareMap);
+       // bsgBot.initRobot(hardwareMap);
 
         //FOR THE WEBCAM
         /*
@@ -126,12 +125,15 @@ public class EasyOpenCVRedTest extends LinearOpMode {
             switch (pipeline.getLatestResults()) {
                 case GOAL_A:
                     //copy code from dragon draft red A (if it works)
+                    telemetry.addData("OwO", "A");
                     break;
                 case GOAL_B:
                     //copy code from dragon draft red B (if it works)
+                    telemetry.addData("OwO", "B");
                     break;
                 case GOAL_C:
                     //copy code from dragon draft red C (if it works)
+                    telemetry.addData("OwO", "C");
                     break;
 
             }

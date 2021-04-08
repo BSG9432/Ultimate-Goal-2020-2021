@@ -66,7 +66,6 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Disabled
 @Autonomous(name="dragonDraft")
 //Our Auto paths
 public class dragonDraft extends LinearOpMode {
@@ -89,7 +88,8 @@ public class dragonDraft extends LinearOpMode {
     Integer gearratio = 20; //because NeveRest 40
     Double diameter = 4.0;
     Double cpi = (cpr * gearratio) / (Math.PI * diameter); //counts per inch, 28cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
-    Double meccyBias = .7; //change to adjust only strafing movement (was .9)
+    Double bias = .4;//default 0.8
+    Double meccyBias = 4.0; //change to adjust only strafing movement
     //
     @Override
     public void runOpMode() {
@@ -99,7 +99,7 @@ public class dragonDraft extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
-        bsgbot.closeLeftClaw();
+        bsgbot.openClaw();
         //bsgbot.closeRightClaw();
 
 
@@ -119,6 +119,9 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        bsgbot.wing.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.wing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         // Send telemetry message to indicate successful Encoder reset
         //
         telemetry.addData("Path0", "Starting at %7d :%7d",
@@ -127,285 +130,127 @@ public class dragonDraft extends LinearOpMode {
                 bsgbot.backLeft.getCurrentPosition(),
                 bsgbot.backRight.getCurrentPosition());
         telemetry.update();
-        //AutoTransitioner.transitionOnStop(this, "Robot Teleop");
+        //AutoTransitioner.transitionOnStop(this, "arcadeMode");
 
         bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bsgbot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bsgbot.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //bsgbot.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
-        //leftWingEncoder(.4,400,2);
-        //rightWingEncoder(.4,-400,2);
 
-        //wings down?
-        //leftWingEncoder(.4,-400,2);
-        //rightWingEncoder(.4,400,2);
-       // bluePathA();
+        redPathC();
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-/*
+
     // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
+    //WORKING
     public void redPathA() {
+
         //Aila: Red Path --> A (Be on the right of the wobble)
-        strafeToPosition(12, STRAFE_SPEED);  //Strafe Right 12 inches
+        strafeToPosition(1,STRAFE_SPEED);//Strafe LEFT 12 Inches
+        wingDown();
+        bsgbot.closeClaw();
+        sleep(1000);
 
-        encoderDrive(DRIVE_SPEED, 60, 60, 3.0);  //Forward 60 inches
+        encoderDrive(DRIVE_SPEED, -100, -100, 5.0);  //Forward 60 inches
 
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0);//Pivot Left
+        bsgbot.openClaw();//drops wobble goal from right side
 
-        rightWingDown();//Puts the right arm down
+        wingUp();//Puts the left arm down
 
-        bsgbot.openRightClaw();//drops wobble goal from right side
+        strafeToPosition(17,STRAFE_SPEED);//Strafe LEFT 12 Inches
 
-        rightWingUp();//Puts right arm up
-
-        encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0); //Forward 33.326 Inches
-
-        strafeToPosition(-35.326, STRAFE_SPEED);  //Strafe left 35.326 Inches
-
-        leftWingDown();//Puts the left arm down
-
-        bsgbot.closeLeftClaw();//grab new wobble goal with left arm
-
-        strafeToPosition(47.326, STRAFE_SPEED);  //Strafe right 47.326 Inches
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
-
-        strafeToPosition(32, STRAFE_SPEED);  //Strafe right 32 Inches
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
-
-        bsgbot.openLeftClaw();//drop wobble goal from left
-
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
-
-        strafeToPosition(-12, STRAFE_SPEED);//Strafe left 12 inches
-
-        encoderDrive(DRIVE_SPEED,72,72,3.0);//Forward 72 Inches
+        encoderDrive(DRIVE_SPEED, -55, -55, 5.0);
 
         bsgbot.conveyor.setPower(1);//Run conveyor
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.frontRight.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        bsgbot.backRight.setPower(0);
+        sleep(5000);//Keep running until all 3 have been shot
 
-        sleep(3000);//Keep running until all 3 have been shot
+        //fix speed later
+        encoderDrive(DRIVE_SPEED -0.2,55,55,10.0);//Drive FORWARD 12 Inches
 
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0);//Backward 60 Inches
+
     }
-    public void bluePathA() {
-        //Aila: Blue Path --> A (Be on the right of the wobble)
-        strafeToPosition(-6, STRAFE_SPEED);  //Strafe left 12 Inches with 3 Sec timeout
 
-        encoderDrive(DRIVE_SPEED, 30, 30, 3.0);  //Forward 60 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0);//Pivot right
-
-        leftWingDown();//Puts the left arm down
-
-        bsgbot.openLeftClaw();//Drop wobble goal from left arm
-
-        leftWingUp();//Puts left arm up
-
-        encoderDrive(DRIVE_SPEED, 33.326, 33.326, 3.0);// Forward 33.326 Inches with 3 Sec timeout
-
-        strafeToPosition(35.326, STRAFE_SPEED);//Strafe right 35.326 Inches with 3 Sec timeout
-
-        rightWingDown();//Puts the right arm down
-
-        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
-
-        strafeToPosition(-47.326, STRAFE_SPEED);  //Strafe left 47.326 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
-
-        strafeToPosition(-32, STRAFE_SPEED);  //Strafe left 32 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
-
-        bsgbot.openRightClaw();//Drop wobble goal with right side
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
-
-        strafeToPosition(-12, STRAFE_SPEED);//Strafe left 12 inches
-
-        encoderDrive(DRIVE_SPEED,72,72,3.0);//Forward 72 Inches
-
-        bsgbot.conveyor.setPower(1);//Run conveyor
-
-        sleep(3000);//Keep running until all 3 have been shot
-
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0);//Backward 60 Inches
-    }
+    //untested
     public void redPathB() {
-        //Aila: Red Path--> B
-        strafeToPosition(12, STRAFE_SPEED);  //Strafe right 12 Inches with 3 Sec timeout
+        //Aila: Red Path --> B (Be on the right of the wobble)
+        strafeToPosition(1,STRAFE_SPEED);//Strafe LEFT 12 Inches
+        wingDown();
+        bsgbot.closeClaw();
+        sleep(1000);
 
-        encoderDrive(DRIVE_SPEED, 84, 84, 3.0);  //Forward 84 Inches with 3 Sec timeout
+        strafeToPosition(17,STRAFE_SPEED);//Strafe LEFT 12 Inches
 
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
+        encoderDrive(DRIVE_SPEED, -100, -100, 5.0);  //Forward 100 inches
 
-        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forward 24 Inches
+        bsgbot.openClaw();//drops wobble goal from right side
 
-        rightWingDown();//Puts the right arm down
+        wingUp();//Puts the left arm down
 
-        bsgbot.openRightClaw();//Drop wobble goal right arm
+        //drive up to low goal
+        encoderDrive(DRIVE_SPEED, -55, -55, 5.0);
 
-        rightWingUp();//Puts the right arm up
-
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Move forward 45.366 Inches with 3 Sec timeout
-
-        strafeToPosition(-35.326, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
-
-        leftWingDown();//Puts left wing down
-
-        bsgbot.closeLeftClaw();//Grab new wobble goal with left arm
-
-        strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
-
-        encoderDrive(-DRIVE_SPEED,-12,-12,3.0); //Backwards 12 inches
-
-        encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
-
-        bsgbot.openLeftClaw();//Drop wobble goal with left arm
-
-        encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
-
-        encoderDrive(DRIVE_SPEED, 48, 48, 3.0); //Forwards 48 Inches
-
-        bsgbot.conveyor.setPower(1);//S: Run conveyor
-
-        sleep(3000);//Run conveyor until all 3 donuts have been shot
-
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
-    }
-
-    public void bluePathB() {
-        //Aila: Blue Path--> B
-        strafeToPosition(-12, STRAFE_SPEED);  //Strafe left 12 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 84, 84, 3.0);  //Forward 84 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
-
-        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forward 24 Inches
-
-        leftWingDown();//Puts the left arm down
-
-        bsgbot.openLeftClaw();//Drop wobble goal from left arm
-
-        bsgbot.leftWingUp();//Puts the left arm up
-
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Move forward 45.366 Inches with 3 Sec timeout
-
-        strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
-
-        rightWingDown();//Puts right wing down
-
-        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
-
-        strafeToPosition(35.326, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
-
-        encoderDrive(-DRIVE_SPEED,-12,-12,3.0); //Backwards 12 inches
-
-        encoderDrive(DRIVE_SPEED,27.548, -27.548, 3.0); //Pivot Right 180 degrees
-
-        bsgbot.openLeftClaw();//Drop wobble goal with left arm
-
-        encoderDrive(DRIVE_SPEED,-13.774, 13.774, 3.0);//Pivot left
-
-        encoderDrive(DRIVE_SPEED, 48, 48, 3.0); //Forwards 48 Inches
-
+        //outtake
         bsgbot.conveyor.setPower(1);//Run conveyor
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.frontRight.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        bsgbot.backRight.setPower(0);
+        sleep(5000);//Keep running until all 3 have been shot
 
-        sleep(3000);//Run conveyor until all 3 donuts have been shot
-
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
+        //park
+        encoderDrive(DRIVE_SPEED -0.2,55,55,10.0);//Drive FORWARD 12 Inches
     }
+
+
+    //untested
     public void redPathC() {
         //Aila: Red Path --> C
-        strafeToPosition(12, STRAFE_SPEED);  //Strafe right 12 Inches with 3 Sec timeout
+        strafeToPosition(1,STRAFE_SPEED);//Strafe LEFT 12 Inches
+        wingDown();
+        bsgbot.closeClaw();
+        sleep(1000);
 
-        encoderDrive(DRIVE_SPEED, 108, 108, 3.0);  ///Forward 108 Inches with 3 Sec timeout
+        encoderDrive(DRIVE_SPEED,-113,-113,10.0);//Drive FORWARD 120 Inches
 
-        encoderDrive(DRIVE_SPEED, -13.744, 13.744, 3.0); //Pivot left
+        bsgbot.openClaw();//drops wobble goal from right side
 
-        rightWingDown();//Puts the right arm down
+        wingUp();//Puts the left arm down
 
-        bsgbot.openRightClaw();//Drop wobble goal from right arm
-
-        bsgbot.rightWingUp();//Puts the right arm up
-
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Strafe right 45.366 Inches with 3 Sec timeout
-
-        strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 86.634 Inches with 3 Sec timeout
-
-        leftWingDown(); //Puts left arm down
-
-        bsgbot.closeLeftClaw();//Grab new wobble goal with left arm
-
-        strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 35.326 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, -36, 316, 3.0);  //Backward 40.366 inches with 3 sec timeout
-
-        encoderDrive(DRIVE_SPEED,27.548,-27.548,3.0);//Pivot Right 180 degrees
-
-        bsgbot.openLeftClaw();//Drop wobble goal from left arm
-
-        encoderDrive(DRIVE_SPEED,-13.774,13.774,3.0); //Pivot Left
-
-        strafeToPosition(-24,STRAFE_SPEED);//Strafe left 24 inches
-
-        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forwards 24 Inches
+        strafeToPosition(17,STRAFE_SPEED);//Strafe LEFT 12 Inches
 
         bsgbot.conveyor.setPower(1);//Run conveyor
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.frontRight.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        bsgbot.backRight.setPower(0);
+        sleep(5000);//Keep running until all 3 have been shot
 
-        sleep(3000);//Run conveyor until all 3 donuts have been shot
+        //fix speed later
+        encoderDrive(DRIVE_SPEED -0.2,55,55,10.0);//Drive FORWARD 12 Inches
 
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
     }
 
-    public void bluePathC() {
-        //Aila: Blue Path --> C
-        strafeToPosition(-12, STRAFE_SPEED);  //Strafe left 12 Inches with 3 Sec timeout
+    public void testPowershots(){
+        //robot should be facing backwards
+        /*
+        strafeToPosition(12,STRAFE_SPEED);//Strafe right 24 inches
+        conveyor.setPower(1);
+        bsgbot.flywheel.setPower(1);
+        sleep(2000);
 
-        encoderDrive(DRIVE_SPEED, 108, 108, 3.0);  ///Forward 108 Inches with 3 Sec timeout
 
-        encoderDrive(DRIVE_SPEED, 13.744, -13.744, 3.0); //Pivot right
-
-        leftWingDown();//Puts the left arm down
-
-        bsgbot.openLeftClaw();//Drop wobble goal from left
-
-        bsgbot.leftWingUp();//Puts the left arm up
-
-        encoderDrive(DRIVE_SPEED, 45.366, 45.366, 3.0);  //Forwards 45.366 Inches with 3 Sec timeout
-
-        strafeToPosition(86.634, STRAFE_SPEED);  //Strafe right 86.634 Inches with 3 Sec timeout
-
-        rightWingDown(); //Puts right arm down
-
-        bsgbot.closeRightClaw();//Grab new wobble goal with right arm
-
-        strafeToPosition(-86.634, STRAFE_SPEED);  //Strafe left 35.326 Inches with 3 Sec timeout
-
-        encoderDrive(DRIVE_SPEED, -36, -36, 3.0);  //Backward 36 inches with 3 sec timeout
-
-        encoderDrive(DRIVE_SPEED,-27.548,27.548,3.0);//Pivot Left 180 degrees
-
-        bsgbot.openRightClaw();//Drop wobble goal from right side
-
-        encoderDrive(DRIVE_SPEED,13.774,-13.774,3.0); //Pivot Right
-
-        strafeToPosition(24,STRAFE_SPEED);//Strafe right 24 inches
-
-        encoderDrive(DRIVE_SPEED,24,24,3.0);//Forwards 24 Inches
-
-        bsgbot.conveyor.setPower(1);//Run conveyor
-
-        sleep(3000);//Run conveyor until all 3 donuts have been shot
-
-        encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
+         */
     }
 
     public void encoderDrive(double speed, double leftInches,
@@ -416,11 +261,21 @@ public class dragonDraft extends LinearOpMode {
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
-            // Determine new target position, and pass to motor controller
-            newLeftTarget = bsgbot.frontLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = bsgbot.frontRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
-            newLeftTarget = bsgbot.backLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightTarget = bsgbot.backRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            newLeftTarget = bsgbot.frontLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH * bias);
+            newRightTarget = bsgbot.frontRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH * bias);
+            newLeftTarget = bsgbot.backLeft.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH * bias);
+            newRightTarget = bsgbot.backRight.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH * bias);
 
             bsgbot.frontLeft.setTargetPosition(newLeftTarget);
             bsgbot.frontRight.setTargetPosition(newRightTarget);
@@ -448,7 +303,7 @@ public class dragonDraft extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (bsgbot.frontLeft.isBusy() && bsgbot.frontRight.isBusy() && bsgbot.backLeft.isBusy() && bsgbot.backRight.isBusy())) {
+                    (bsgbot.frontLeft.isBusy() && bsgbot.backLeft.isBusy() && bsgbot.frontRight.isBusy() && bsgbot.backRight.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
@@ -479,6 +334,15 @@ public class dragonDraft extends LinearOpMode {
 
     //strafing with encoders
     public void strafeToPosition(double inches, double speed) {
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        bsgbot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bsgbot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         int move = (int) (Math.round(inches * cpi * meccyBias * 1.265));
 
         bsgbot.backLeft.setTargetPosition(bsgbot.backLeft.getCurrentPosition() - move);
@@ -517,64 +381,29 @@ public class dragonDraft extends LinearOpMode {
     }
     //encoders for wings
     //420 ppr
-    public void rightWingEncoder(double speed,
-                           int targetTicks, double timeoutS) {
-        int newTarget;
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
 
-            // Determine new target position, and pass to motor controller
-            newTarget = bsgbot.rightWing.getCurrentPosition() + (int) (targetTicks);
-
-            bsgbot.rightWing.setTargetPosition(newTarget);
-
-            // Turn On RUN_TO_POSITION
-            bsgbot.rightWing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            bsgbot.rightWing.setPower(Math.abs(speed));
-
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS)) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Right Wing Running to  :%7d", targetTicks);
-                telemetry.addData("Path2", "Running at 3 :%7d",
-                        bsgbot.rightWing.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            bsgbot.rightWing.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            bsgbot.rightWing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-            sleep(250);   // optional pause after each move
-        }
-    }
     //encoders for wings
-    public void leftWingEncoder(double speed,
+    public void wingEncoder(double speed,
                                  int targetTicks, double timeoutS) {
         int newTarget;
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
+            bsgbot.wing.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            bsgbot.wing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Determine new target position, and pass to motor controller
-            newTarget = bsgbot.leftWing.getCurrentPosition() + (int) (targetTicks);
+            newTarget = bsgbot.wing.getCurrentPosition() + (int) (targetTicks);
 
-            bsgbot.leftWing.setTargetPosition(newTarget);
+            bsgbot.wing.setTargetPosition(newTarget);
 
             // Turn On RUN_TO_POSITION
-            bsgbot.leftWing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bsgbot.wing.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
             // reset the timeout time and start motion.
             runtime.reset();
-            bsgbot.leftWing.setPower(Math.abs(speed));
+            bsgbot.wing.setPower(Math.abs(speed));
 
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS)) {
@@ -582,36 +411,31 @@ public class dragonDraft extends LinearOpMode {
                 // Display it for the driver.
                 telemetry.addData("Path1", "Left Wing running to  :%7d", targetTicks);
                 telemetry.addData("Path2", "Running at 3 :%7d",
-                        bsgbot.leftWing.getCurrentPosition());
+                        bsgbot.wing.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            bsgbot.leftWing.setPower(0);
+            bsgbot.wing.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            bsgbot.leftWing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bsgbot.wing.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
             sleep(250);   // optional pause after each move
         }
     }
     //Wings Up
-    public void leftWingUp (){
-        bsgbot.leftWing.setPower(-.4);
+    public void wingUp (){
         //wings down?
-        leftWingEncoder(.4,-400,2);
+        wingEncoder(.4,-400,2);
     }
-    public void rightWingUp () {
-        rightWingEncoder(.4,400,2);
-    }
-    //Wings Down
-    public void leftWingDown (){
-        leftWingEncoder(.4,400,2);
-    }
-    public void rightWingDown () {
-        rightWingEncoder(.4,-400,2);    }
 
- */
+    //Wings Down
+    public void wingDown (){
+        wingEncoder(.5,600,2);
+    }
+
+
 
 }
