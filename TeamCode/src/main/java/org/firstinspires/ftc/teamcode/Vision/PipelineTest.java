@@ -33,11 +33,13 @@ public class PipelineTest extends OpenCvPipeline {
      * The core values which define the location and size of the sample regions
      * I put random point values based on how I *think* this is supposed to work
      */
-    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(120,90);
-    //static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-    //static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
+    //adjust for where rings are relative to the camera
+    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(181,98);
+
     static final int REGION_WIDTH = 40;
     static final int REGION_HEIGHT = 30;
+    final int FOUR_RING_THRESHOLD = 160;
+    final int ONE_RING_THRESHOLD = 150;
 
     /*
      * Points which actually define the sample region rectangles, derived from above values
@@ -83,7 +85,7 @@ public class PipelineTest extends OpenCvPipeline {
     void inputToCb(Mat input)
     {
         Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-        Core.extractChannel(YCrCb, Cb, 2);
+        Core.extractChannel(YCrCb, Cb, 1);
     }
 
     @Override
@@ -160,10 +162,8 @@ public class PipelineTest extends OpenCvPipeline {
          * at index 2 here.
          */
         avg = (int) Core.mean(region1_Cb).val[0];
-        //output pixel average to RC for testing
-        telemetry.addData("avgPixel",  "Average Pixels: %7d",
-                avg);
-        telemetry.update();
+
+        //telemetry.update();
 
         /*
          * Draw a rectangle showing sample region 1 on the screen.
@@ -182,11 +182,11 @@ public class PipelineTest extends OpenCvPipeline {
          * figure out which sample region that value was from
          */
         //If there are 4 rings
-        if(avg > 200) {
+        if(avg > FOUR_RING_THRESHOLD) {
             stack = ringStack.GOAL_C; // Record our analysis
         }
         //If there's 1 ring
-        else if(avg > 100) {
+        else if(avg > ONE_RING_THRESHOLD) {
             stack = ringStack.GOAL_B; // Record our analysis
         }
         //If there are no rings
@@ -217,4 +217,11 @@ public class PipelineTest extends OpenCvPipeline {
     public ringStack getLatestResults(){
         return stack;
     }
+
+    public int getAnalysis() {
+        return avg;
+    }
+
+
+
 }
