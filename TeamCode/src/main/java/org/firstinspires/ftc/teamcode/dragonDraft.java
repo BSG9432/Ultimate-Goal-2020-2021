@@ -100,7 +100,6 @@ public class dragonDraft extends LinearOpMode {
          */
         bsgbot.initRobot(hardwareMap);
         bsgbot.openClaw();
-        //bsgbot.closeRightClaw();
 
 
 
@@ -153,8 +152,10 @@ public class dragonDraft extends LinearOpMode {
     public void redPathA() {
 
         //Aila: Red Path --> A (Be on the right of the wobble)
-        strafeToPosition(1,STRAFE_SPEED);//Strafe LEFT 12 Inches
+        strafeToPosition(3,STRAFE_SPEED);//Strafe LEFT 12 Inches
         wingDown();
+        strafeToPosition(-2,STRAFE_SPEED);//Strafe LEFT 12 Inches
+
         bsgbot.closeClaw();
         sleep(1000);
 
@@ -184,23 +185,17 @@ public class dragonDraft extends LinearOpMode {
     //untested
     public void redPathB() {
         //Aila: Red Path --> B (Be on the right of the wobble)
-        strafeToPosition(1,STRAFE_SPEED);//Strafe LEFT 12 Inches
+        strafeToPosition(3,STRAFE_SPEED);//Strafe LEFT 12 Inches
         wingDown();
+        strafeToPosition(-2,STRAFE_SPEED);//Strafe LEFT 12 Inches
+
         bsgbot.closeClaw();
         sleep(1000);
 
+        encoderDrive(DRIVE_SPEED,-150,-150,10.0);//Drive FORWARD 120 Inches
+
         strafeToPosition(17,STRAFE_SPEED);//Strafe LEFT 12 Inches
 
-        encoderDrive(DRIVE_SPEED, -100, -100, 5.0);  //Forward 100 inches
-
-        bsgbot.openClaw();//drops wobble goal from right side
-
-        wingUp();//Puts the left arm down
-
-        //drive up to low goal
-        encoderDrive(DRIVE_SPEED, -55, -55, 5.0);
-
-        //outtake
         bsgbot.conveyor.setPower(1);//Run conveyor
         bsgbot.frontLeft.setPower(0);
         bsgbot.frontRight.setPower(0);
@@ -208,20 +203,32 @@ public class dragonDraft extends LinearOpMode {
         bsgbot.backRight.setPower(0);
         sleep(5000);//Keep running until all 3 have been shot
 
-        //park
-        encoderDrive(DRIVE_SPEED -0.2,55,55,10.0);//Drive FORWARD 12 Inches
+        encoderDrive(DRIVE_SPEED -0.2,25,25,10.0);//Drive FORWARD 12 Inches
+
+        bsgbot.openClaw();//drops wobble goal from right side
+
+        wingUp();//Puts the left arm down
+
+        encoderDrive(DRIVE_SPEED -0.2,30,30,10.0);//Drive FORWARD 12 Inches
+
+
+
+        //fix speed later
+
     }
 
 
     //untested
     public void redPathC() {
         //Aila: Red Path --> C
-        strafeToPosition(1,STRAFE_SPEED);//Strafe LEFT 12 Inches
+        strafeToPosition(3,STRAFE_SPEED);//Strafe LEFT 12 Inches
         wingDown();
+        strafeToPosition(-2,STRAFE_SPEED);//Strafe LEFT 12 Inches
+
         bsgbot.closeClaw();
         sleep(1000);
 
-        encoderDrive(DRIVE_SPEED,-113,-113,10.0);//Drive FORWARD 120 Inches
+        encoderDrive(DRIVE_SPEED,-155,-155,10.0);//Drive FORWARD 120 Inches
 
         bsgbot.openClaw();//drops wobble goal from right side
 
