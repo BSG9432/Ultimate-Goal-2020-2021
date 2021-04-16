@@ -25,7 +25,7 @@ public class arcadeMode extends OpMode {
         //dragonbot.leftWingUp();
         //dragonbot.rightWingUp();
         //dragonbot.rightWing.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        dragonbot.wing.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        dragonbot.wing.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         dragonbot.openClaw();
@@ -154,14 +154,14 @@ public class arcadeMode extends OpMode {
 
         //left Wing Up
         if (gamepad1.x) {
-            dragonbot.wing.setPower(-.9);
+            dragonbot.wing.setPower(-1);
         } else {
             dragonbot.wing.setPower(0);
         }
 
         if(gamepad1.a) {
             //right wing down
-            dragonbot.wing.setPower(.3);
+            dragonbot.wing.setPower(1);
         } else {
             dragonbot.wing.setPower(0);
         }

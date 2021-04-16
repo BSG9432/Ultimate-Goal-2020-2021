@@ -19,9 +19,7 @@ public class Robot {
     public DcMotor conveyor;
 
     public Servo claw;
-    //public Servo rightClaw;
     public DcMotor wing;
-    //public DcMotor rightWing;
     //public DcMotor flywheel;
 
     public Telemetry telemetry;
@@ -46,9 +44,9 @@ public class Robot {
         //flywheel = hardwareMap.dcMotor.get("flywheel");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
