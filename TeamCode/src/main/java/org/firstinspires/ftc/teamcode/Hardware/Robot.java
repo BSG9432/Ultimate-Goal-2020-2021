@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,9 +21,10 @@ public class Robot {
 
     public Servo claw;
     public DcMotor wing;
-    //public DcMotor flywheel;
+    public DcMotor flywheel;
 
     public Telemetry telemetry;
+    public BNO055IMU imu;
 
     //Constructor
     public Robot() {
@@ -41,12 +43,25 @@ public class Robot {
         claw = hardwareMap.servo.get("claw"); //5
         wing = hardwareMap.dcMotor.get("wing");
 
-        //flywheel = hardwareMap.dcMotor.get("flywheel");
+        flywheel = hardwareMap.dcMotor.get("flywheel");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         //backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        //The parameters for the IMU
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
+
 
     }
 
