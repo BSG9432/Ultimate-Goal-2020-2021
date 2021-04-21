@@ -18,6 +18,8 @@ public class imuTest extends LinearOpMode {
 
     Robot bsgbot = new Robot();
     Orientation angles;
+    double currentAngle;
+    double targetAngle;
 
 
     @Override
@@ -52,8 +54,8 @@ public class imuTest extends LinearOpMode {
 
     private void rotate(int degrees)
     {
-        double currentAngle = -getHeading();
-        double targetAngle = currentAngle + degrees;
+        currentAngle = -getHeading();
+        targetAngle = currentAngle + degrees;
         double power = .5;
 
         // restart imu movement tracking.
@@ -147,5 +149,11 @@ public class imuTest extends LinearOpMode {
 
     String formatDegrees(double degrees){
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
+    }
+    public double getCurrentAngle(){
+        return currentAngle;
+    }
+    public double getTargetAngle(){
+        return targetAngle;
     }
 }

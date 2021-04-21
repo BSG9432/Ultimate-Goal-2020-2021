@@ -68,10 +68,12 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  */
 
 @Disabled
+//Currently set just to test if the flywheel runs
 @Autonomous(name="yoink")
 //Code used to refine bias values
 public class encoderTesting extends LinearOpMode {
-    Robot bsgbot = new Robot();
+    //Robot bsgbot = new Robot();
+    DcMotor flywheel;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -101,15 +103,15 @@ public class encoderTesting extends LinearOpMode {
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        bsgbot.initRobot(hardwareMap);
-        bsgbot.closeClaw();
+       // bsgbot.initRobot(hardwareMap);
+       // bsgbot.closeClaw();
 
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        /*bsgbot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bsgbot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bsgbot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bsgbot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -132,13 +134,19 @@ public class encoderTesting extends LinearOpMode {
         bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses PLAY)
+
+         */
+        flywheel = hardwareMap.dcMotor.get("flywheel");
         waitForStart();
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         //encoderDrive(DRIVE_SPEED, 12, 12, 3.0);
-        strafeToPosition(12, DRIVE_SPEED);
+       // strafeToPosition(12, DRIVE_SPEED);
+
+        flywheel.setPower(1);
+        sleep(10000);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -403,7 +411,7 @@ public class encoderTesting extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, -60, -60, 3.0); //Backwards 60 Inches
     }*/
-
+/*
     public void encoderDrive(double speed, double leftInches,
                              double rightInches, double timeoutS) {
         int newLeftTarget;
@@ -554,6 +562,8 @@ public class encoderTesting extends LinearOpMode {
     }
 
 
+
  */
+
 
 }
