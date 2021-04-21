@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
+    ElapsedTime timer = new ElapsedTime();
 
 
 
@@ -43,7 +45,10 @@ public class arcadeMode extends OpMode {
         telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
 
         //telemetry.addData("Right Wing", dragonbot.rightWing);
-        telemetry.addData("Left Wing", dragonbot.wing);
+        telemetry.addData("Flywheel Velocity", dragonbot.flywheel.getVelocity());
+        telemetry.addData("Flywheel Ticks", dragonbot.flywheel.getCurrentPosition());
+        telemetry.addData("Flywheel Power", dragonbot.flywheel.getPower());
+        telemetry.addData("Revs per Sec", (float) ((dragonbot.flywheel.getCurrentPosition() / 537.6) / timer.seconds()));
 
         telemetry.update();
 
@@ -110,10 +115,10 @@ public class arcadeMode extends OpMode {
         }
         //Intake Forward Controls
         if (gamepad1.right_bumper) {
-            dragonbot.intake.setPower(1);
+            dragonbot.intake.setPower(-1);
         } else if (gamepad1.left_bumper) {
             //Intake  Backwards Controls
-            dragonbot.intake.setPower(-1);
+            dragonbot.intake.setPower(1);
         }
         else {
             dragonbot.intake.setPower(0);
@@ -122,10 +127,10 @@ public class arcadeMode extends OpMode {
 
         //Conveyor Down
         if (Math.abs(gamepad1.left_trigger) > .1) {
-            dragonbot.conveyor.setPower(-gamepad1.left_trigger);
+            dragonbot.conveyor.setPower(gamepad1.left_trigger);
         } else if (Math.abs(gamepad1.right_trigger) > .1) {
             //Conveyor Up
-            dragonbot.conveyor.setPower(gamepad1.right_trigger);
+            dragonbot.conveyor.setPower(-gamepad1.right_trigger);
         }
         else {
             dragonbot.conveyor.setPower(0);
@@ -167,21 +172,21 @@ public class arcadeMode extends OpMode {
         }
 
 
-        /*
-        //Right Wing Up
-        if (gamepad1.y) {
-            dragonbot.rightWing.setPower(.9);
-        } else {
-            dragonbot.rightWing.setPower(0);
-        }
-        if (gamepad1.b) {
-            //left wing down
-            dragonbot.rightWing.setPower(-.3);
-        } else {
-            dragonbot.rightWing.setPower(0);
-        }
 
-         */
+        //Flywheel Testing
+        if (Math.abs(gamepad2.left_stick_y) > .1) {
+            dragonbot.flywheel.setPower(gamepad2.left_stick_y);
+            timer.startTime();
+            /*if(timer.milliseconds() >= 1000){
+                timer.reset();
+                dragonbot.flywheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                timer.startTime();
+            }*/
+           // dragonbot.flywheel.setPower(gamepad2.left_trigger);
+
+        } else {
+          //  dragonbot.flywheel.setPower(0);
+        }
 
 
 
