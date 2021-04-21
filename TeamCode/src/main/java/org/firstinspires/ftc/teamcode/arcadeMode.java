@@ -142,10 +142,10 @@ public class arcadeMode extends OpMode {
         }
 
          */
-        if(gamepad1.dpad_up){
+        if(gamepad1.x){
             dragonbot.closeClaw();
         }
-        if(gamepad1.dpad_down){
+        if(gamepad1.b){
             dragonbot.openClaw();
         }
         /*
@@ -158,7 +158,7 @@ public class arcadeMode extends OpMode {
 
 
         //left Wing Up
-        if (gamepad1.x) {
+        if (gamepad1.y) {
             dragonbot.wing.setPower(-1);
         } else {
             dragonbot.wing.setPower(0);
@@ -174,9 +174,11 @@ public class arcadeMode extends OpMode {
 
 
         //Flywheel Testing
-        if (Math.abs(gamepad2.left_stick_y) > .1) {
-            dragonbot.flywheel.setPower(gamepad2.left_stick_y);
-            timer.startTime();
+        if (gamepad1.dpad_down) {
+            //dragonbot.flywheel.setPower(1);
+            dragonbot.flywheel.setVelocity(1000);
+            //timer.startTime();
+            //dragonbot.flywheel.setVelocityPIDFCoefficients(10,10,10,10);
             /*if(timer.milliseconds() >= 1000){
                 timer.reset();
                 dragonbot.flywheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -185,10 +187,8 @@ public class arcadeMode extends OpMode {
            // dragonbot.flywheel.setPower(gamepad2.left_trigger);
 
         } else {
-          //  dragonbot.flywheel.setPower(0);
+          dragonbot.flywheel.setPower(0);
         }
-
-
 
     }
 }
