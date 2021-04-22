@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
-@TeleOp (name = "arcadeMode")
+@TeleOp (name = "TylaOp")
 
 public class arcadeMode extends OpMode {
     Robot dragonbot = new Robot();
@@ -166,7 +166,7 @@ public class arcadeMode extends OpMode {
 
         if(gamepad1.a) {
             //right wing down
-            dragonbot.wing.setPower(1);
+            dragonbot.wing.setPower(.95);
         } else {
             dragonbot.wing.setPower(0);
         }
@@ -176,7 +176,7 @@ public class arcadeMode extends OpMode {
         //Flywheel Testing
         if (gamepad1.dpad_down) {
             //dragonbot.flywheel.setPower(1);
-            dragonbot.flywheel.setVelocity(1000);
+            dragonbot.flywheel.setVelocity(5000);
             //timer.startTime();
             //dragonbot.flywheel.setVelocityPIDFCoefficients(10,10,10,10);
             /*if(timer.milliseconds() >= 1000){

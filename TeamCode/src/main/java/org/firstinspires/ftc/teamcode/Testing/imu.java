@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 
 import java.util.Locale;
 
-@Autonomous(name = "imuTest", group = "testing")
-public class imuTest extends LinearOpMode {
+@Autonomous(name = "imu", group = "testing")
+public class imu extends LinearOpMode {
 
     Robot bsgbot = new Robot();
     Orientation angles;

@@ -142,7 +142,10 @@ public class dragonDraft extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
 
-        redPathC();
+        //redPathC();
+        wingUp();
+        sleep(3000);
+        wingDown();
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }

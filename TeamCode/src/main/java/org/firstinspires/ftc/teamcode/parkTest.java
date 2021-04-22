@@ -67,6 +67,7 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+@Disabled
 @Autonomous(name="parkTest", group="working")
 //Simple wait-time code to drive up to low goal, outtake rings, and park
 //WORKING Red and Blue paths to outtake preloaded rings and park on line

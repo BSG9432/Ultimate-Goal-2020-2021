@@ -27,6 +27,7 @@ public class Robot {
     public Telemetry telemetry;
     public BNO055IMU imu;
 
+
     //Constructor
     public Robot() {
 
@@ -53,6 +54,7 @@ public class Robot {
 
         //reverse flywheel
         flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
+        flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //The parameters for the IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -117,5 +119,7 @@ public class Robot {
     public void wingDown () {
         wing.setPower(.4);
     }
+
+
 
 }
