@@ -160,19 +160,14 @@ public class arcadeMode extends OpMode {
         //left Wing Up
         if (gamepad1.y) {
             dragonbot.wing.setPower(-1);
-        } else {
-            dragonbot.wing.setPower(0);
-        }
-
-        if(gamepad1.a) {
-            //right wing down
+        } else if (gamepad1.a) {
             dragonbot.wing.setPower(.95);
-        } else {
+        }
+        else
+        {
             dragonbot.wing.setPower(0);
         }
-
-
-
+        
         //Flywheel Testing
         if (gamepad1.dpad_down) {
             //dragonbot.flywheel.setPower(1);
