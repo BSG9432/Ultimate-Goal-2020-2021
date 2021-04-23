@@ -36,6 +36,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
 
@@ -71,7 +75,12 @@ import org.firstinspires.ftc.teamcode.KNO3AutoTransitioner.AutoTransitioner;
 public class dragonDraft extends LinearOpMode {
     Robot bsgbot = new Robot();
 
+    Orientation angles;
+    double currentAngle;
+    double targetAngle;
+
     private ElapsedTime runtime = new ElapsedTime();
+
 
     //counts per motor rev = ticks per rev
     static final double COUNTS_PER_MOTOR_REV = 537.6;    // NeveRest 20
@@ -99,8 +108,7 @@ public class dragonDraft extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         bsgbot.initRobot(hardwareMap);
-        bsgbot.openClaw();
-
+        bsgbot.closeClaw();
 
 
 
@@ -129,7 +137,7 @@ public class dragonDraft extends LinearOpMode {
                 bsgbot.backLeft.getCurrentPosition(),
                 bsgbot.backRight.getCurrentPosition());
         telemetry.update();
-        //AutoTransitioner.transitionOnStop(this, "arcadeMode");
+        AutoTransitioner.transitionOnStop(this, "arcadeMode");
 
         bsgbot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bsgbot.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -142,14 +150,13 @@ public class dragonDraft extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
 
-        //redPathC();
-        wingUp();
-        sleep(3000);
-        wingDown();
+        newRedA();
+        //rotate(90);
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-
+    /*
     // I may or may not have flipped the measurements for the grabber in relation to the back and sides so the first 3 paths need to be checked
     //WORKING
     public void redPathA() {
@@ -214,8 +221,6 @@ public class dragonDraft extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED -0.2,30,30,10.0);//Drive FORWARD 12 Inches
 
-
-
         //fix speed later
 
     }
@@ -249,7 +254,41 @@ public class dragonDraft extends LinearOpMode {
         //fix speed later
         encoderDrive(DRIVE_SPEED -0.2,55,55,10.0);//Drive FORWARD 12 Inches
 
+    }*/
+
+    public void newRedA() {
+
+        encoderDrive(DRIVE_SPEED, -100, -100, 5.0);  //Forward 60 inches
+        //bsgbot.wingDown();
+        sleep(500);
+        //bsgbot.openClaw();//drops wobble goal from right side
+        sleep(500);
+
+        rotate(28);
+
+        encoderDrive(DRIVE_SPEED, 30, 30, 5.0);  //Forward 60 inches
+
+        //wobble arm down
+        //strafe
+        //grab
+        //reverse same movement
+        //park (shoot if time)
+
+        //encoderDrive(DRIVE_SPEED, 75, 75, 5.0);
+
+        //strafeToPosition(-17,STRAFE_SPEED);//Strafe LEFT 12 Inches
+
+        //bsgbot.closeClaw();
+
+
     }
+    public void newRedB() {
+
+    }
+    public void newRedC(){
+
+    }
+
 
     public void testPowershots(){
         //robot should be facing backwards
@@ -258,8 +297,6 @@ public class dragonDraft extends LinearOpMode {
         conveyor.setPower(1);
         bsgbot.flywheel.setPower(1);
         sleep(2000);
-
-
          */
     }
 
@@ -437,15 +474,69 @@ public class dragonDraft extends LinearOpMode {
     }
     //Wings Up
     public void wingUp (){
-        //wings down?
-        wingEncoder(.4,-400,2);
+        //wings down? -400
+        wingEncoder(.4,790,2);
     }
 
-    //Wings Down
+    //Wings Down 600
     public void wingDown (){
-        wingEncoder(.5,600,2);
+        wingEncoder(.5,-800,2);
     }
 
+    public double getHeading() {
+        Orientation angles = bsgbot.imu.getAngularOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX, AngleUnit.DEGREES);
+        double heading = angles.firstAngle;
+        return heading;
+    }
+
+    public void rotate(int degrees)
+    {
+        currentAngle = -getHeading();
+        targetAngle = currentAngle + degrees - 8;
+        double power = .5;
+
+        // restart imu movement tracking.
+        if (degrees < 0)
+        {   // turn left.
+            while (opModeIsActive() && currentAngle >= targetAngle){
+                currentAngle = -getHeading();
+                // set power to rotate.
+                bsgbot.frontLeft.setPower(-power);
+                bsgbot.backLeft.setPower(-power);
+                bsgbot.frontRight.setPower(power);
+                bsgbot.backRight.setPower(power);
+                telemetry.addData("Current Angle: ", currentAngle);
+                telemetry.addData("Target Angle: ", targetAngle);
+                telemetry.update();
+            }
+        }
+        else if (degrees > 0)
+        {
+            //turn right
+            while (opModeIsActive() && currentAngle <= targetAngle){
+                currentAngle = -getHeading();
+                // set power to rotate.
+                bsgbot.frontLeft.setPower(power);
+                bsgbot.backLeft.setPower(power);
+                bsgbot.frontRight.setPower(-power);
+                bsgbot.backRight.setPower(-power);
+                telemetry.addData("Current Angle: ", currentAngle);
+                telemetry.addData("Target Angle: ", targetAngle);
+                telemetry.update();
+            }
+        }
+        else return;
+
+        //turn the motors off.
+        bsgbot.frontLeft.setPower(0);
+        bsgbot.backLeft.setPower(0);
+        bsgbot.frontRight.setPower(0);
+        bsgbot.backRight.setPower(0);
+
+        // wait for rotation to stop.
+        sleep(1000);
+    }
 
 
 }

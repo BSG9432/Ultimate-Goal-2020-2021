@@ -34,12 +34,13 @@ public class PipelineTest extends OpenCvPipeline {
      * I put random point values based on how I *think* this is supposed to work
      */
     //adjust for where rings are relative to the camera
-    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,110);
+    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,90);
+    //0, 110
 
-    static final int REGION_WIDTH = 65; //40
-    static final int REGION_HEIGHT = 60; //30
-    final int FOUR_RING_THRESHOLD = 150;
-    final int ONE_RING_THRESHOLD = 135;
+    static final int REGION_WIDTH = 50; //40
+    static final int REGION_HEIGHT = 50; //30
+    final int FOUR_RING_THRESHOLD = 145;
+    final int ONE_RING_THRESHOLD = 130;
 
     /*
      * Points which actually define the sample region rectangles, derived from above values

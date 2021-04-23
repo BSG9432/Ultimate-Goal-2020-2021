@@ -29,8 +29,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
+import org.firstinspires.ftc.teamcode.Testing.Imu;
 import org.firstinspires.ftc.teamcode.Vision.PipelineTest;
 
+import org.firstinspires.ftc.teamcode.dragonDraft;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -44,15 +46,16 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 @Autonomous(name = "EasyOpenCVRedTest")
 public class EasyOpenCVRedTest extends LinearOpMode {
-   // Robot bsgBot = new Robot();
+    Robot bsgbot = new Robot();
     OpenCvCamera webcam; //Webcam 1 in config
 
     PipelineTest pipeline;
+    Imu imu = new Imu();
 
     @Override
     public void runOpMode() {
         //initialize robot hardware
-        // bsgBot.initRobot(hardwareMap);
+        bsgbot.initRobot(hardwareMap);
 
         //FOR THE WEBCAM
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -80,25 +83,29 @@ public class EasyOpenCVRedTest extends LinearOpMode {
         waitForStart();
 
         switch (pipeline.getLatestResults()) {
-            case GOAL_A:
+            case GOAL_A: //0
+
                 //copy code from dragon draft red A (if it works)
                 telemetry.addData("OwO", "A");
                 telemetry.update();
-                sleep(5000);
+                //bsgbot.openClaw();
+                sleep(1000);
                 break;
-            case GOAL_B:
+            case GOAL_B: //1
                 //copy code from dragon draft red B (if it works)
                 telemetry.addData("OwO", "B");
-                sleep(5000);
+                sleep(1000);
+                //bsgbot.drive(-.5);
 
                 telemetry.update();
 
                 break;
-            case GOAL_C:
+            case GOAL_C: //4
                 //copy code from dragon draft red C (if it works)
                 telemetry.addData("OwO", "C");
                 telemetry.update();
-                sleep(5000);
+                //bsgbot.conveyor.setPower(.5);
+                sleep(1000);
 
                 break;
 

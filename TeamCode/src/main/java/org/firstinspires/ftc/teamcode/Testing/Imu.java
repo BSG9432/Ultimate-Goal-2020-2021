@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import java.util.Locale;
 
 @Autonomous(name = "imu", group = "testing")
-public class imu extends LinearOpMode {
+public class Imu extends LinearOpMode {
 
     Robot bsgbot = new Robot();
     Orientation angles;
@@ -52,7 +52,7 @@ public class imu extends LinearOpMode {
         return heading;
     }
 
-    private void rotate(int degrees)
+    public void rotate(int degrees)
     {
         currentAngle = -getHeading();
         targetAngle = currentAngle + degrees;
